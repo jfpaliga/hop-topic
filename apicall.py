@@ -9,13 +9,18 @@ API_PROPERTIES = ["ibu", "target_fg", "target_og", "ebc",
 
 resp = requests.get(API_URL)
 beers = resp.json()
+beer_fixture = []
 
 for beer in beers:
+    pk = 1
     for prop in API_PROPERTIES:
         del beer[prop]
-
-    beer["first_brewed"] = datetime.strptime(beer["first_brewed"], "%m/%Y")
+    beer_fixture.append(
+        {"model": "catalog.Beer",
+         "pk": pk,
+         "fields": beer})
+    pk += 1
 
 writeFile = open('beers.json', 'w')
-json.dump(beers, writeFile)
+json.dump(beer_fixture, writeFile)
 writeFile.close()

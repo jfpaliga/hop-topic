@@ -7,7 +7,7 @@ class Beer(models.Model):
     """
     name = models.CharField(max_length=200, unique=True)
     tagline = models.CharField(max_length=200, unique=True)
-    first_brewed = models.DateField()
+    first_brewed = models.CharField()
     description = models.TextField()
     image_url = models.URLField()
     abv = models.IntegerField()
