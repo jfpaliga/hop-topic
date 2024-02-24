@@ -3,6 +3,14 @@
     background-size: auto;
 }
 
+.beer-img {
+    padding-top: 10px;
+    width: 450px;
+    height: 300px;
+    object-fit: contain;
+    object-position: 22% 100%;
+}
+
 .page-link {
     margin: 0 5px 0 5px;
     text-decoration: none;
