@@ -6,3 +6,4 @@ from .models import Beer
 class BeerList(generic.ListView):
     queryset = Beer.objects.all()
     template_name = "catalog/index.html"
+    paginate_by = 8
