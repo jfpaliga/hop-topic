@@ -17,17 +17,17 @@
             </div>
         </div>
     </div>
-    <div class="container card text-center">
+    <div class="container card text-center mt-2 mb-2">
         <div class="row card-body">
             <h6 class="card-title">First brewed: {{beer.first_brewed}}</h5>
             <h6 class="card-subtitle">ABV: {{beer.abv}}%</h5>
-            <hr>
+            <hr class="mt-2">
             <article>
                 {{ beer.description | safe }}
             </article>
-            <hr>
+            <hr class="mt-2">
             <div>
-                <strong>Delicious foods to try with this beer:</strong>
+                <p class="mb-2"><strong>Delicious foods to try with this beer:</strong></p>
                 <ul class="list-group">
                     {% for food in beer.food_pairing %}
                     <li class="list-group-item">
