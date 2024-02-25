@@ -10,25 +10,27 @@
             {% for beer in object_list %}
             <div class="col mb-5">
                 <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top beer-img" src="{{beer.image_url}}" alt="An image of the beer" />
-                    <!-- Beer details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Beer name-->
-                            <h5 class="fw-bolder">{{beer.name}}</h5>
-                            <!-- Beer tagline-->
-                            {{beer.tagline}}
-                            <!-- Beer reviews-->
-                            <!-- <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div> -->
+                    <a href="{% url 'beer_detail' beer.id %}">
+                    <!-- Beer image-->
+                        <img class="card-img-top beer-img" src="{{beer.image_url}}" alt="An image of the beer" />
+                        <!-- Beer details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Beer name-->
+                                <h5 class="fw-bolder">{{beer.name}}</h5>
+                                <!-- Beer tagline-->
+                                {{beer.tagline}}
+                                <!-- Beer reviews-->
+                                <!-- <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                </div> -->
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#"><i class="fa-regular fa-heart"></i></a></div>
