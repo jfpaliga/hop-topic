@@ -52,10 +52,10 @@
     </div>
     <div class="row">
         <div class="col-md-6 card mt-2 mb-2">
-            <h3>Reviews:</h3>
-            <div class="card-body text-center">
+            <div class="card-body">
+                <h3>Reviews:</h3>
                 {% for review in reviews %}
-                <div class="p-2 reviews
+                <div class="text-center p-2 reviews
                 {% if not review.is_approved and review.author == user %}
                 faded{% elif not review.is_approved %} d-none{% endif %}">
                     <p class="font-weight-bold">

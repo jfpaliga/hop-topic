@@ -14,7 +14,7 @@ class BeerAdmin(SummernoteModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(SummernoteModelAdmin):
 
-    list_display = ('author', 'rating', 'is_approved',)
+    list_display = ('author', 'beer', 'rating', 'is_approved',)
     search_fields = ['author', 'rating']
     list_filter = ('is_approved',)
     summernote_fields = ('body',)

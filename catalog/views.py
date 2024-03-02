@@ -35,6 +35,7 @@ def beer_detail(request, id):
             review.beer = beer
             review.save()
             messages.add_message(
+                request, messages.SUCCESS,
                 "Your review has been submitted and is awaiting approval"
             )
 
