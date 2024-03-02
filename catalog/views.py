@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
+from django.contrib import messages
 from .models import Beer, Review
+from .forms import ReviewForm
 
 # Create your views here.
 class BeerList(generic.ListView):
@@ -25,10 +27,25 @@ def beer_detail(request, id):
     reviews = beer.reviews.all().order_by("-created_on")
     reviews_count = beer.reviews.filter(is_approved=True).count()
 
+    if request.method == "POST":
+        review_form = ReviewForm(data=request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.author = request.user
+            review.beer = beer
+            review.save()
+            messages.add_message(
+                "Your review has been submitted and is awaiting approval"
+            )
+
+    review_form = ReviewForm()
+
     return render(
         request,
         "catalog/beer_detail.html",
         {"beer": beer,
          "reviews": reviews,
-         "reviews_count": reviews_count},
+         "reviews_count": reviews_count,
+         "review_form": review_form,
+         },
     )
