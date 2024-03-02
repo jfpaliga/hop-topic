@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Beer(models.Model):
@@ -15,3 +16,25 @@ class Beer(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+    
+
+class Review(models.Model):
+    """
+    Stores a single review on a beer related to :model:`auth.User`
+    and :model:`catalog.Beer`.
+    """
+    beer = models.ForeignKey(
+        Beer, on_delete=models.CASCADE, related_name="reviews")
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="reviewer")
+    rating = models.DecimalField(max_digits=2, decimal_places=1)
+    body = models.TextField()
+    is_approved = models.BooleanField(default=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["created_on"]
+
+    def __str__(self):
+        return f"Review of {self.beer.name}: {self.rating} by {self.author}"

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from .models import Beer
+from .models import Beer, Review
 
 # Create your views here.
 class BeerList(generic.ListView):
@@ -22,9 +22,13 @@ def beer_detail(request, id):
 
     queryset = Beer.objects.all()
     beer = get_object_or_404(queryset, id=id)
+    reviews = beer.reviews.all().order_by("-created_on")
+    reviews_count = beer.reviews.filter(is_approved=True).count()
 
     return render(
         request,
         "catalog/beer_detail.html",
-        {"beer": beer,},
+        {"beer": beer,
+         "reviews": reviews,
+         "reviews_count": reviews_count},
     )
