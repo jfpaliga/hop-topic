@@ -41,12 +41,15 @@ def beer_detail(request, id):
 
     review_form = ReviewForm()
 
-    return render(
-        request,
-        "catalog/beer_detail.html",
-        {"beer": beer,
+    context = {
+        "beer": beer,
          "reviews": reviews,
          "reviews_count": reviews_count,
          "review_form": review_form,
-         },
+         }
+
+    return render(
+        request,
+        "catalog/beer_detail.html",
+        context,
     )

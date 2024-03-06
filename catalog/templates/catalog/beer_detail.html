@@ -88,7 +88,7 @@
                 {% if user.is_authenticated %}
                 <h3>Leave A Review:</h3>
                 <form id="reviewForm" method="post">
-                    {{ review_form | crispy }}
+                    {% crispy review_form %}
                     {% csrf_token %}
                     <button class="btn">Submit</button>
                 </form>

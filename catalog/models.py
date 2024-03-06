@@ -23,7 +23,13 @@ class Review(models.Model):
     Stores a single review on a beer related to :model:`auth.User`
     and :model:`catalog.Beer`.
     """
-    RATINGS = ((1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"),)
+    RATINGS = (
+        (1, "1"),
+        (2, "2"),
+        (3, "3"),
+        (4, "4"),
+        (5, "5"),
+        )
 
     beer = models.ForeignKey(
         Beer, on_delete=models.CASCADE, related_name="reviews")
