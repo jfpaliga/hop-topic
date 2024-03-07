@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from .models import Beer, Review
 from .forms import ReviewForm
 
@@ -43,13 +44,53 @@ def beer_detail(request, id):
 
     context = {
         "beer": beer,
-         "reviews": reviews,
-         "reviews_count": reviews_count,
-         "review_form": review_form,
-         }
+        "reviews": reviews,
+        "reviews_count": reviews_count,
+        "review_form": review_form,
+        }
 
     return render(
         request,
         "catalog/beer_detail.html",
         context,
     )
+
+
+def edit_review(request, id, review_id):
+    """
+    view to edit reviews
+    """
+    if request.method == "POST":
+
+        queryset = Beer.objects.all()
+        beer = get_object_or_404(queryset, id=id)
+        review = get_object_or_404(Review, pk=review_id)
+        review_form = ReviewForm(data=request.POST, instance=review)
+
+        if review_form.is_valid() and review.author == request.user:
+            review = review_form.save(commit=False)
+            review.beer = beer
+            review.is_approved = False
+            review.save()
+            messages.add_message(request, messages.SUCCESS, 'Review Updated!')
+        else:
+            messages.add_message(request, messages.ERROR, 'Error updating review!')
+
+    return HttpResponseRedirect(reverse('beer_detail', args=[id]))
+
+
+def delete_review(request, id, review_id):
+    """
+    view to delete reviews
+    """
+    queryset = Beer.objects.all()
+    beer = get_object_or_404(queryset, id=id)
+    review = get_object_or_404(Review, pk=review_id)
+
+    if review.author == request.user:
+        review.delete()
+        messages.add_message(request, messages.SUCCESS, 'Comment deleted!')
+    else:
+        messages.add_message(request, messages.ERROR, 'You can only delete your own reviews!')
+
+    return HttpResponseRedirect(reverse('beer_detail', args=[id]))

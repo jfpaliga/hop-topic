@@ -1,7 +1,7 @@
 from django import forms
 from crispy_forms.bootstrap import InlineRadios
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field
+from crispy_forms.layout import Layout, Field, Submit
 from .models import Review
 
 
@@ -14,9 +14,12 @@ class ReviewForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+        self.helper.form_id = 'reviewForm'
+        self.helper.form_method = 'post'
         self.helper.layout = Layout(
             InlineRadios('rating'),
-            Field('body')
+            Field('body'),
+            Submit('submit', 'Submit', css_id = 'submitButton'),
         )
 
     class Meta:
