@@ -10,6 +10,7 @@ class BeerList(generic.ListView):
     queryset = Beer.objects.all()
     template_name = "catalog/index.html"
     paginate_by = 8
+    
 
 def beer_detail(request, id):
     """

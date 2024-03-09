@@ -19,8 +19,13 @@
                                 <!-- Beer name-->
                                 <h5 class="fw-bolder">{{beer.name}}</h5>
                                 <!-- Beer tagline-->
-                                {{beer.tagline}}
+                                <p>{{beer.tagline}}</p>
                                 <!-- Beer reviews-->
+                                {% if beer.average_rating != 0 %}
+                                    <p>{{beer.average_rating}} / 5.0</p>
+                                {% else %}
+                                    <p>No reviews</p>
+                                {% endif %}
                                 <!-- <div class="d-flex justify-content-center small text-warning mb-2">
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>
