@@ -2,15 +2,28 @@ from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 from .models import Beer, Review
 from .forms import ReviewForm
 
 # Create your views here.
 class BeerList(generic.ListView):
-    queryset = Beer.objects.all()
     template_name = "catalog/index.html"
     paginate_by = 8
-    
+
+    def get_queryset(self):
+        queryset = Beer.objects.all()
+
+        query = self.request.GET.get('query')
+        if query:
+            queryset = queryset.filter(
+                Q(name__icontains=query) | 
+                Q(tagline__icontains=query) | 
+                Q(description__icontains=query)
+            ).values()
+
+        return queryset
+   
 
 def beer_detail(request, id):
     """

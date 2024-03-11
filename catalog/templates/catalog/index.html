@@ -6,6 +6,17 @@
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
+        <div class="row g-0 card">
+            <div class="col-md-12 card-body">
+                <p>Search by Name/Keyword:</p>
+                <form method="get" action="{% url 'home' %}">
+                    <input type="text" name="query" value="{{ request.GET.query }}" placeholder="Search">
+                    <button type="submit" class="btn btn-secondary">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {% for beer in object_list %}
             <div class="col mb-5">
