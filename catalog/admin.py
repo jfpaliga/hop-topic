@@ -6,7 +6,7 @@ from .models import Beer, Review
 @admin.register(Beer)
 class BeerAdmin(SummernoteModelAdmin):
 
-    list_display = ('name', 'tagline', 'first_brewed',)
+    list_display = ('name', 'tagline', 'abv',)
     search_fields = ['name', 'abv']
     summernote_fields = ('description',)
 

@@ -23,6 +23,30 @@ class BeerList(generic.ListView):
             ).values()
 
         return queryset
+    
+
+class BeerFilterList(BeerList):
+    
+    def get_queryset(self):
+        if self.kwargs['filter_type'] == 'rating':
+            queryset = Beer.objects.filter(average_rating=int(self.kwargs['filter_set']))
+        elif self.kwargs['filter_type'] == 'abv':
+            if self.kwargs['filter_set'] == 'lt5':
+                queryset = Beer.objects.filter(abv__lt=5)
+            elif self.kwargs['filter_set'] == '5to10':
+                queryset = Beer.objects.filter(abv__gte=5, abv__lte=10)
+            elif self.kwargs['filter_set'] == 'gt10':
+                queryset = Beer.objects.filter(abv__gt=10)
+
+        query = self.request.GET.get('query')
+        if query:
+            queryset = queryset.filter(
+                Q(name__icontains=query) | 
+                Q(tagline__icontains=query) | 
+                Q(description__icontains=query)
+            ).values()
+
+        return queryset
    
 
 def beer_detail(request, id):

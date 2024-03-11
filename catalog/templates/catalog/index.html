@@ -6,13 +6,39 @@
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
-        <div class="row g-0 card">
-            <div class="col-md-12 card-body">
-                <p>Search by Name/Keyword:</p>
-                <form method="get" action="{% url 'home' %}">
-                    <input type="text" name="query" value="{{ request.GET.query }}" placeholder="Search">
-                    <button type="submit" class="btn btn-secondary">Search</button>
-                </form>
+        <div class="row g-0">
+            <div class="col-md-6 card">
+                <div class="card-body d-flex">
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" id="rating-dropdown" type="button" 
+                        data-bs-toggle="dropdown" aria-expanded="false">Filter by rating:</button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/filter/rating/5" class="rating-dropdown-item">5</a></li>
+                            <li><a href="/filter/rating/4" class="rating-dropdown-item">4</a></li>
+                            <li><a href="/filter/rating/3" class="rating-dropdown-item">3</a></li>
+                            <li><a href="/filter/rating/2" class="rating-dropdown-item">2</a></li>
+                            <li><a href="/filter/rating/1" class="rating-dropdown-item">1</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" id="abv-dropdown" type="button" 
+                        data-bs-toggle="dropdown" aria-expanded="false">Filter by ABV:</button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/filter/abv/lt5" class="abv-dropdown-item">&lt; 5%</a></li>
+                            <li><a href="/filter/abv/5to10" class="abv-dropdown-item">5 - 10%</a></li>
+                            <li><a href="/filter/abv/gt10" class="abv-dropdown-item">&gt; 10%</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 card">
+                <div class="card-body">
+                    <p>Search by Name/Keyword:</p>
+                    <form method="get" action="{% url 'home' %}">
+                        <input type="text" name="query" value="{{ request.GET.query }}" placeholder="Search">
+                        <button type="submit" class="btn btn-secondary">Search</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
