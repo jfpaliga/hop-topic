@@ -13,19 +13,21 @@ class Beer(models.Model):
     image_url = models.URLField()
     abv = models.IntegerField()
     food_pairing = models.JSONField()
+    avg_rating = models.DecimalField(decimal_places=1, max_digits=2, default=0)
 
     def __str__(self):
         return f"{self.name}"
     
-    def average_rating(self):
-        reviews = self.reviews.filter(is_approved=True)
+    # @property
+    # def average_rating(self):
+    #     reviews = self.reviews.filter(is_approved=True)
 
-        if reviews:
-            total_ratings = sum(review.rating for review in reviews)
-            average_rating = total_ratings / len(reviews)
-            return average_rating
-        else:
-            return 0
+    #     if reviews:
+    #         total_ratings = sum(review.rating for review in reviews)
+    #         average_rating = total_ratings / len(reviews)
+    #         return average_rating
+    #     else:
+    #         return 0
     
 
 class Review(models.Model):

@@ -58,8 +58,8 @@
                                 <!-- Beer tagline-->
                                 <p>{{beer.tagline}}</p>
                                 <!-- Beer reviews-->
-                                {% if beer.average_rating != 0 %}
-                                    <p>{{beer.average_rating}} / 5.0</p>
+                                {% if beer.avg_rating %}
+                                    <p>{{beer.avg_rating}} / 5.0</p>
                                 {% else %}
                                     <p>No reviews</p>
                                 {% endif %}
