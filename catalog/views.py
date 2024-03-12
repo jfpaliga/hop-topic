@@ -3,10 +3,11 @@ from django.views import generic
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+
 from .models import Beer, Review
 from .forms import ReviewForm
 
-# Create your views here.
+
 class BeerList(generic.ListView):
     template_name = "catalog/index.html"
     paginate_by = 8

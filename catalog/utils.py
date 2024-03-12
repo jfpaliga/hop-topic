@@ -1,6 +1,6 @@
 def get_beer_average_rating(beer):
     """
-    update the beer rating when approved rating is updated
+    Update the beer avg rating when a new review is approved
     """
     ratings = beer.reviews.filter(
         is_approved=True).values_list('rating', flat=True)
