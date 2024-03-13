@@ -36,6 +36,6 @@ def get_random_beer_pk():
         prev_random_beers.insert(0, {'pk': random_beer_pk,
                                      'date': today})
         prev_random_beers = prev_random_beers[:7]
-        cache.set('prev_random_beers', prev_random_beers)
+        cache.set('prev_random_beers', prev_random_beers, timeout=None)
 
     return random_beer_pk
