@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import generic
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -6,6 +6,7 @@ from django.db.models import Q
 
 from .models import Beer, Review
 from .forms import ReviewForm
+from .utils import get_random_beer_pk
 
 
 class BeerList(generic.ListView):
@@ -59,7 +60,7 @@ def beer_detail(request, id):
         An instance of :model:`catalog.Beer`.
 
     ** Template**
-    :template:`blog/post_detail.html`
+    :template:`catalog/beer_detail.html`
     """
 
     queryset = Beer.objects.all()
@@ -95,9 +96,24 @@ def beer_detail(request, id):
     )
 
 
+def beer_of_the_day(request):
+    """
+    Display a random :model:`catalog.Beer`.
+
+    **Context**
+    ``beer``
+        An instance of :model:`catalog.Beer`.
+
+    ** Template**
+    :template:`catalog/beer_detail.html`
+    """
+    random_beer = get_random_beer_pk()
+    return redirect('beer_detail', id=random_beer)
+
+
 def edit_review(request, id, review_id):
     """
-    view to edit reviews
+    View to edit reviews
     """
     if request.method == "POST":
 
@@ -120,7 +136,7 @@ def edit_review(request, id, review_id):
 
 def delete_review(request, id, review_id):
     """
-    view to delete reviews
+    View to delete reviews
     """
     queryset = Beer.objects.all()
     beer = get_object_or_404(queryset, id=id)
