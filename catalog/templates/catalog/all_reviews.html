@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{ load static }
+
+{% block content %}
+<div class="container px-4 px-lg-5 mt-5">
+    {% for review in review_list %}
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <p class="card-title">Review of <a href="{% url 'beer_detail' review.beer.id %}">{{ review.beer.name }}</a></p>
+                <p class="card-text">Written by {{ review.author }}</p>
+                <p class="card-text">Created on: {{ review.created_on }}</p>
+                <p class="card-text">Last updated: {{ review.updated_on }}</p>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <p class="card-title">Rating: {{ review.rating }}</p>
+                    <p class="card-text">Review:</p>
+                    <p class="card-text">{{ review.body | safe }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

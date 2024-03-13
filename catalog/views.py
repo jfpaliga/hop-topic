@@ -149,3 +149,27 @@ def delete_review(request, id, review_id):
         messages.add_message(request, messages.ERROR, 'You can only delete your own reviews!')
 
     return HttpResponseRedirect(reverse('beer_detail', args=[id]))
+
+
+def all_reviews(request):
+    """
+    Display a list of all approved reviews in :model:`catalog.Review`.
+
+    **Context**
+    ``review``
+        An instance of :model:`catalog.Review`.
+
+    ** Template**
+    :template:`catalog/all_reviews.html`
+    """
+    
+    queryset = Review.objects.filter(is_approved=True).order_by("-created_on")
+    context = {
+        "review_list": queryset,
+    }
+
+    return render(
+        request,
+        "catalog/all_reviews.html",
+        context
+    )
