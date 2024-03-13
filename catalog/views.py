@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import generic
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 
@@ -103,14 +104,9 @@ def beer_detail(request, id):
 
 def beer_of_the_day(request):
     """
-    Display a random :model:`catalog.Beer`.
-
-    **Context**
-    ``beer``
-        An instance of :model:`catalog.Beer`.
-
-    ** Template**
-    :template:`catalog/beer_detail.html`
+    View to display a random beer. The random beer is the
+    same for each user and will not be the same as another
+    random beer from the past 7 days.
     """
     random_beer = get_random_beer_pk()
     return redirect('beer_detail', id=random_beer)
@@ -154,3 +150,32 @@ def delete_review(request, id, review_id):
         messages.add_message(request, messages.ERROR, 'You can only delete your own reviews!')
 
     return HttpResponseRedirect(reverse('beer_detail', args=[id]))
+
+
+def user_reviews(request, username):
+    """
+    Display a users approved reviews from :model:`catalog.Review`.
+
+    **Context**
+    ``reviews``
+        Entries in :model:`catalog.Reviewer` that have been approved.
+
+    ** Template**
+    :template:`catalog/user_reviews.html`
+    """
+    queryset = User.objects.all()
+    user = get_object_or_404(queryset, username=username)
+    reviews = user.reviewer.filter(is_approved=True).order_by("-created_on")
+    reviews_count = reviews.count()
+
+    context = {
+        "user": user,
+        "reviews": reviews,
+        "reviews_count": reviews_count
+    }
+
+    return render(
+        request,
+        "catalog/user_reviews.html",
+        context,
+    )
