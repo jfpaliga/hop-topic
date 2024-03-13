@@ -61,8 +61,8 @@
                 faded{% elif not review.is_approved %} d-none{% endif %}">
                     <p class="font-weight-bold">
                         {{ review.author }}
-                        <span>
-                            {{ review.rating }}
+                        <span class="review_rating">
+                            User rating: {{ review.rating }}
                         </span>
                         <span class="font-weight-normal">
                         {{ review.created_on }}
