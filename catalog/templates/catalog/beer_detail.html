@@ -60,7 +60,7 @@
                 {% if not review.is_approved and review.author == user %}
                 faded{% elif not review.is_approved %} d-none{% endif %}">
                     <p class="font-weight-bold">
-                        {{ review.author }}
+                        <a href="{% url 'user_reviews' review.author.username %}">{{ review.author }}</a>
                         <span class="review_rating">
                             User rating: {{ review.rating }}
                         </span>

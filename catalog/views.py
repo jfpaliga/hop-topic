@@ -10,9 +10,37 @@ from .forms import ReviewForm
 from .utils import get_random_beer_pk
 
 
-class ReviewList(generic.ListView):
+class ReviewList(generic.View):
+    model = Review
     template_name = "catalog/all_reviews.html"
-    queryset = Review.objects.filter(is_approved=True).order_by("-created_on")
+
+
+    def get(self, request, *args, **kwargs):
+        
+        if request.GET.get('query'):
+            query = request.GET.get('query')
+            if query in User.objects.values_list("username", flat=True):
+                return redirect('user_reviews', query)
+            else:
+                messages.add_message(request, messages.ERROR, 'User does not exist!')
+                return HttpResponseRedirect(reverse('all_reviews'))
+
+        queryset = self.get_queryset()
+        context = self.get_context_data(queryset)
+        return render(
+            request,
+            self.template_name,
+            context
+        )
+
+
+    def get_queryset(self):
+        queryset = Review.objects.filter(is_approved=True).order_by("-created_on")
+        return queryset
+    
+    
+    def get_context_data(self, queryset):
+        return {"review_list": queryset}
 
 
 class BeerList(generic.ListView):

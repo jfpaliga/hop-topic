@@ -2,6 +2,15 @@
 { load static }
 
 {% block content %}
+<div class="navbar navbar-expand-lg bg-dark justify-content-center">
+    <span class="mx-3 text-light">Search for Users: </span>
+    <div class="mx-3">
+        <form class="" method="get" action="{% url 'all_reviews' %}">
+            <input type="text" name="query" value="{{ request.GET.query }}" placeholder="Search">
+            <button type="submit" class="btn btn-secondary">Search</button>
+        </form>
+    </div>
+</div>
 <div class="container px-4 px-lg-5 mt-5">
     {% for review in review_list %}
     <div class="card mb-3">
