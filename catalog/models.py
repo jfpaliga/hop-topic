@@ -11,7 +11,7 @@ class Beer(models.Model):
     first_brewed = models.CharField(max_length=100)
     description = models.TextField()
     image_url = models.URLField()
-    abv = models.IntegerField()
+    abv = models.FloatField()
     food_pairing = models.JSONField()
     avg_rating = models.DecimalField(decimal_places=1, max_digits=2, default=0)
 
