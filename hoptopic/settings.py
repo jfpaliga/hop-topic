@@ -31,7 +31,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
@@ -48,14 +48,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'cloudinary',
     'crispy_forms',
     'crispy_bootstrap5',
     'django_summernote',
     'catalog',
+    'users',
 ]
 
 SITE_ID = 1
@@ -161,3 +164,19 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DATE_FORMAT = 'F Y'
+DATE_INPUT_FORMATS = [
+    "%Y-%m-%d",  # '2006-10-25'
+    "%m/%d/%Y",  # '10/25/2006'
+    "%m/%d/%y",  # '10/25/06'
+    "%b %d %Y",  # 'Oct 25 2006'
+    "%b %d, %Y",  # 'Oct 25, 2006'
+    "%d %b %Y",  # '25 Oct 2006'
+    "%d %b, %Y",  # '25 Oct, 2006'
+    "%B %d %Y",  # 'October 25 2006'
+    "%B %d, %Y",  # 'October 25, 2006'
+    "%d %B %Y",  # '25 October 2006'
+    "%d %B, %Y",  # '25 October, 2006'
+    "%B %Y", # October 2006
+]
