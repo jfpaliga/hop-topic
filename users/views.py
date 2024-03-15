@@ -12,7 +12,6 @@ def new_beer_request(request):
         if request_form.is_valid():
             beer_request = request_form.save(commit=False)
             beer_request.user = request.user
-            print(beer_request.first_brewed, type(beer_request.first_brewed))
             beer_request.save()
             messages.add_message(
                 request, messages.SUCCESS,

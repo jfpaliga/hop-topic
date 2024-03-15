@@ -10,6 +10,6 @@ class Requests(models.Model):
     brewery_name = models.CharField(max_length=200, blank=True, null=True)
     image = CloudinaryField('image', default='placeholder')
     abv = models.FloatField()
-    first_brewed = models.DateField()
+    first_brewed = models.CharField(max_length=200)
     comments = models.TextField()
     is_approved = models.BooleanField(default=False)

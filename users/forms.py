@@ -4,20 +4,20 @@ from datetime import datetime
 from .models import Requests
 
 
-class MonthYearWidget(forms.widgets.DateInput):
-    input_type = 'month'
-
-    def format_value(self, value):
-        if isinstance(value, str):
-            value = datetime.strptime(value, '%Y-%m').date()
-        if value is not None:
-            print(value, type(value))
-            return value
-
-
 class RequestsForm(forms.ModelForm):
-    first_brewed = forms.DateField(widget=MonthYearWidget)
-
     class Meta:
         model = Requests
         fields = ('beer_name', 'brewery_name', 'image', 'abv', 'first_brewed', 'comments',)
+        widgets = {
+            'first_brewed': forms.DateInput(attrs={'type': 'month'}),
+        }
+
+    def clean_first_brewed(self):
+        data = self.cleaned_data['first_brewed']
+        if isinstance(data, str):
+            try:
+                data = datetime.strptime(data, '%Y-%m').date()
+                data = data.strftime('%m/%Y')
+            except ValueError:
+                raise forms.ValidationError("Enter a valid date")
+        return data
