@@ -6,6 +6,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-6 my-5">
+            {% if user.is_authenticated %}
             <h2>Request a Beer!</h2>
             <p>Are you fanatic about a beer and it's not on our site?</p>
             <p>Fill in the form to recommend your favourite beer,
@@ -15,6 +16,9 @@
                 {% csrf_token %}
                 <button id="submitButton" type="submit" class="btn btn-secondary">Submit</button>
             </form>
+            {% else %}
+            <p class="text-center">Please <a aria-current="page" href="{% url 'account_login' %}">sign in</a> to make a request!</p>
+            {% endif %}
         </div>
     </div>
 </div>
