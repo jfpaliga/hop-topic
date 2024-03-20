@@ -5,43 +5,61 @@
 
 <!-- Section-->
 <section class="py-5">
+    <!-- Search and filters -->
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row g-0">
-            <div class="col-md-6 card">
-                <div class="card-body d-flex">
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle" id="rating-dropdown" type="button" 
-                        data-bs-toggle="dropdown" aria-expanded="false">Filter by rating:</button>
-                        <ul class="dropdown-menu">
-                            <li><a href="/filter/rating/5" class="rating-dropdown-item">5</a></li>
-                            <li><a href="/filter/rating/4" class="rating-dropdown-item">4</a></li>
-                            <li><a href="/filter/rating/3" class="rating-dropdown-item">3</a></li>
-                            <li><a href="/filter/rating/2" class="rating-dropdown-item">2</a></li>
-                            <li><a href="/filter/rating/1" class="rating-dropdown-item">1</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle" id="abv-dropdown" type="button" 
-                        data-bs-toggle="dropdown" aria-expanded="false">Filter by ABV:</button>
-                        <ul class="dropdown-menu">
-                            <li><a href="/filter/abv/lt5" class="abv-dropdown-item">&lt; 5%</a></li>
-                            <li><a href="/filter/abv/5to10" class="abv-dropdown-item">5 - 10%</a></li>
-                            <li><a href="/filter/abv/gt10" class="abv-dropdown-item">&gt; 10%</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 card">
-                <div class="card-body">
-                    <p>Search by Name/Keyword:</p>
+            <div class="card col-md-9">
+                <div class="card-body d-flex flex-column justify-content-center align-items-sm-center align-items-lg-start">
+                    <p >Search by Name/Keyword:</p>
                     <form method="get" action="{% url 'home' %}">
                         <input type="text" name="query" value="{{ request.GET.query }}" placeholder="Search">
                         <button type="submit" class="btn btn-secondary">Search</button>
                     </form>
                 </div>
             </div>
+            <div class="card col-md-3">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" id="rating-dropdown" type="button" 
+                        data-bs-toggle="dropdown" aria-expanded="false" aria-label="Click to access dropdown menu to filter by rating">Filter by rating:</button>
+                        <ul class="dropdown-menu text-center">
+                            <li>
+                                <a href="/filter/rating/5" class="rating-dropdown-item"><div>5</div></a>
+                            </li>
+                            <li>
+                                <a href="/filter/rating/4" class="rating-dropdown-item"><div>4</div></a>
+                            </li>
+                            <li>
+                                <a href="/filter/rating/3" class="rating-dropdown-item"><div>3</div></a>
+                            </li>
+                            <li>
+                                <a href="/filter/rating/2" class="rating-dropdown-item"><div>2</div></a>
+                            </li>
+                            <li>
+                                <a href="/filter/rating/1" class="rating-dropdown-item"><div>1</div></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" id="abv-dropdown" type="button" 
+                        data-bs-toggle="dropdown" aria-expanded="false" aria-label="Click to access dropdown menu to filter by ABV">Filter by ABV:</button>
+                        <ul class="dropdown-menu text-center">
+                            <li>
+                                <a href="/filter/abv/lt5" class="abv-dropdown-item"><div>&lt; 5%</div></a>
+                            </li>
+                            <li>
+                                <a href="/filter/abv/5to10" class="abv-dropdown-item"><div>5 - 10%</div></a>
+                            </li>
+                            <li>
+                                <a href="/filter/abv/gt10" class="abv-dropdown-item"><div>&gt; 10%</div></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- Beer list -->
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {% for beer in object_list %}
@@ -51,32 +69,19 @@
                     <!-- Beer image-->
                         <img class="card-img-top beer-img mx-auto" src="{{beer.image_url}}" alt="An image of the beer" />
                         <!-- Beer details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Beer name-->
-                                <h5 class="fw-bolder">{{beer.name}}</h5>
-                                <!-- Beer tagline-->
-                                <p>{{beer.tagline}}</p>
-                                <!-- Beer reviews-->
-                                {% if beer.avg_rating %}
-                                    <p>{{beer.avg_rating}} / 5.0</p>
-                                {% else %}
-                                    <p>No reviews</p>
-                                {% endif %}
-                                <!-- <div class="d-flex justify-content-center small text-warning mb-2">
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                </div> -->
-                            </div>
+                        <div class="card-body p-4 text-center d-flex flex-column align-items-center">
+                            <!-- Beer name-->
+                            <h5 class="fw-bolder">{{beer.name}}</h5>
+                            <!-- Beer tagline-->
+                            <p>{{beer.tagline}}</p>
+                            <!-- Beer reviews-->
+                            {% if beer.avg_rating %}
+                                <p class="mt-auto">{{beer.avg_rating}} / 5.0</p>
+                            {% else %}
+                                <p class="mt-auto">No reviews</p>
+                            {% endif %}
                         </div>
                     </a>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#"><i class="fa-regular fa-heart"></i></a></div>
-                    </div>
                 </div>
             </div>
             {% endfor %}
