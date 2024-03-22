@@ -5,18 +5,16 @@
 
 {% block content %}
 <!-- Detailed beer display -->
-<div class="container text-center">
-    <div class="row g-0">
-        <div class="col-md-12">
-            <h1>{{beer.name}}</h1>
-            <h3>{{beer.tagline}}</h3>
-            <h3>Rating: {{beer.avg_rating}}</h3>
-        </div>
+<div class="row g-0 text-center">
+    <div class="col-md-12 d-flex flex-column justify-content-center">
+        <h1 class="text-bg-dark p-2">{{beer.name}}</h1>
+        <h3 class="p-2">{{beer.tagline}}</h3>
+        <h3 class="text-bg-dark p-2">Average Rating: {{beer.avg_rating}}</h3>
     </div>
-    <div class="row g-0">
-        <div class="d-none d-md-block col-md-12">
-            <img src="{{beer.image_url}}" alt="An image of {{beer.name}}" class="beer-img mx-auto">
-        </div>
+</div>
+<div class="row g-0 text-center">
+    <div class="d-none d-md-block col-md-12">
+        <img src="{{beer.image_url}}" alt="An image of {{beer.name}}" class="beer-img mx-auto">
     </div>
 </div>
 <div class="container card text-center mt-2 mb-2">
@@ -28,16 +26,18 @@
             {{ beer.description | safe }}
         </article>
         <hr class="mt-2">
-        <div>
-            <p class="mb-2"><strong>Delicious foods to try with this beer:</strong></p>
-            <ul class="list-group">
-                {% for food in beer.food_pairing %}
-                <li class="list-group-item">
-                {{food}}
-                </li>
-                {% endfor %}
-            </ul>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header mb-2 fw-bold">
+        Delicious foods to try with this beer:
         </div>
+        <ul class="list-group list-group-flush">
+            {% for food in beer.food_pairing %}
+            <li class="list-group-item">
+            {{food}}
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 <!-- Reviews -->
@@ -69,10 +69,8 @@
                     <p class="font-weight-normal">
                         {{ review.created_on }} wrote:
                     </p>
-                    <div id="review{{ review.id }}" class="border border-secondary border-2 rounded mb-2 px-2">
-                        <p>
-                            {{ review.body | safe }}
-                        </p>
+                    <div id="review{{ review.id }}" class="border border-secondary border-2 rounded mb-2 px-2 py-3">
+                        {{ review.body | safe }}
                     </div>
                     {% if not review.is_approved and review.author == user %}
                     <p class="approval">
@@ -95,8 +93,8 @@
                     {% csrf_token %}
                 {% else %}
                 <div class="text-center position-absolute top-50 start-50 translate-middle">
-                    <p>Please <a class="fw-bold {% if request.path == login_url %}active{% endif %}" aria-current="page" 
-                        href="{% url 'account_login' %}">sign in</a> to leave a review</p>
+                    Please <a class="fw-bold {% if request.path == login_url %}active{% endif %}" aria-current="page" 
+                        href="{% url 'account_login' %}">sign in</a> to leave a review
                 </div>
                 {% endif %}
             </div>
