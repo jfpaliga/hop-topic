@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 
-from .models import Beer, Review
+from catalog.models import Beer
+from users.models import Review
 from .forms import ReviewForm
 from .utils import get_random_beer_pk
 

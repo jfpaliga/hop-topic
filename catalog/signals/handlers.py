@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from catalog.models import Review
+from users.models import Review
 from catalog.utils import get_beer_average_rating
 
 @receiver(post_save, sender=Review)

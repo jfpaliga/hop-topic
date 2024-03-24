@@ -3,7 +3,7 @@ from crispy_forms.bootstrap import InlineRadios
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Submit
 
-from .models import Review
+from users.models import Review
 
 
 CHOICES = {"1": 1, "2": 2, "3": 3, "4": 4, "5": 5,}
