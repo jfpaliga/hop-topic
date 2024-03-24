@@ -1,47 +1,13 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import generic
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 
 from catalog.models import Beer
 from users.models import Review
-from .forms import ReviewForm
+from .forms import RequestsForm, ReviewForm
 from .utils import get_random_beer_pk
-
-
-class ReviewList(generic.View):
-    model = Review
-    template_name = "catalog/all_reviews.html"
-
-
-    def get(self, request, *args, **kwargs):
-        
-        if request.GET.get('query'):
-            query = request.GET.get('query')
-            if query in User.objects.values_list("username", flat=True):
-                return redirect('user_reviews', query)
-            else:
-                messages.add_message(request, messages.ERROR, 'User does not exist!')
-                return HttpResponseRedirect(reverse('all_reviews'))
-
-        queryset = self.get_queryset()
-        context = self.get_context_data(queryset)
-        return render(
-            request,
-            self.template_name,
-            context
-        )
-
-
-    def get_queryset(self):
-        queryset = Review.objects.filter(is_approved=True).order_by("-created_on")
-        return queryset
-    
-    
-    def get_context_data(self, queryset):
-        return {"review_list": queryset}
 
 
 class BeerList(generic.ListView):
@@ -74,14 +40,6 @@ class BeerFilterList(BeerList):
                 queryset = Beer.objects.filter(abv__gte=5, abv__lte=10)
             elif self.kwargs['filter_set'] == 'gt10':
                 queryset = Beer.objects.filter(abv__gt=10)
-
-        query = self.request.GET.get('query')
-        if query:
-            queryset = queryset.filter(
-                Q(name__icontains=query) | 
-                Q(tagline__icontains=query) | 
-                Q(description__icontains=query)
-            ).values()
 
         return queryset
    
@@ -181,30 +139,24 @@ def delete_review(request, id, review_id):
     return HttpResponseRedirect(reverse('beer_detail', args=[id]))
 
 
-def user_reviews(request, username):
-    """
-    Display a users approved reviews from :model:`catalog.Review`.
+def new_beer_request(request):
+    request_form = RequestsForm()
 
-    **Context**
-    ``reviews``
-        Entries in :model:`catalog.Reviewer` that have been approved.
-
-    ** Template**
-    :template:`catalog/user_reviews.html`
-    """
-    queryset = User.objects.all()
-    user = get_object_or_404(queryset, username=username)
-    reviews = user.reviewer.filter(is_approved=True).order_by("-created_on")
-    reviews_count = reviews.count()
-
-    context = {
-        "user": user,
-        "reviews": reviews,
-        "reviews_count": reviews_count
-    }
+    if request.method == "POST":
+        request_form = RequestsForm(data=request.POST)
+        if request_form.is_valid():
+            beer_request = request_form.save(commit=False)
+            beer_request.user = request.user
+            beer_request.save()
+            messages.add_message(
+                request, messages.SUCCESS,
+                'Request receieved - we will look into adding your beer to the database shortly'
+            )
 
     return render(
         request,
-        "catalog/user_reviews.html",
-        context,
+        "catalog/new_beer_request.html",
+        {
+            "request_form": request_form
+        }
     )

@@ -2,11 +2,32 @@ from django import forms
 from crispy_forms.bootstrap import InlineRadios
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Submit
+from datetime import datetime
 
+from catalog.models import Requests
 from users.models import Review
 
-
 CHOICES = {"1": 1, "2": 2, "3": 3, "4": 4, "5": 5,}
+
+
+class RequestsForm(forms.ModelForm):
+    class Meta:
+        model = Requests
+        fields = ('beer_name', 'brewery_name', 'image', 'abv', 'first_brewed', 'comments',)
+        widgets = {
+            'first_brewed': forms.DateInput(attrs={'type': 'month'}),
+        }
+
+    def clean_first_brewed(self):
+        data = self.cleaned_data['first_brewed']
+        if isinstance(data, str):
+            try:
+                data = datetime.strptime(data, '%Y-%m').date()
+                data = data.strftime('%m/%Y')
+            except ValueError:
+                raise forms.ValidationError("Enter a valid date")
+        return data
+
 
 class ReviewForm(forms.ModelForm):
     """
