@@ -21,6 +21,9 @@ class Beer(models.Model):
 
 
 class Requests(models.Model):
+    """
+    Stores a single request for a beer from a user
+    """
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="requester")
     beer_name = models.CharField(max_length=200, unique=True)

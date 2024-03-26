@@ -11,7 +11,13 @@ CHOICES = {"1": 1, "2": 2, "3": 3, "4": 4, "5": 5,}
 
 
 class RequestsForm(forms.ModelForm):
+    """
+    Form class for users to request a beer to be added to the database
+    """
     class Meta:
+        """
+        Specify the django model and order of the fields
+        """
         model = Requests
         fields = ('beer_name', 'brewery_name', 'image', 'abv', 'first_brewed', 'comments',)
         widgets = {
@@ -19,6 +25,9 @@ class RequestsForm(forms.ModelForm):
         }
 
     def clean_first_brewed(self):
+        """
+        Take the cleaned data and reformat into desired string format
+        """
         data = self.cleaned_data['first_brewed']
         if isinstance(data, str):
             try:

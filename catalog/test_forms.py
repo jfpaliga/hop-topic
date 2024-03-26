@@ -1,9 +1,29 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 
 from .forms import RequestsForm, ReviewForm
 
 
 class TestRequestsForm(TestCase):
+
+    # def setUp(self):
+    #     """
+    #     Creates a mock request form and user
+    #     """
+    #     self.user = User.objects.create_user(
+    #         username="testuser",
+    #         password="testword",
+    #         email="test@test.com"
+    #     )
+
+    #     self.request_form = RequestsForm({
+    #         'user': self.user,
+    #         'beer_name': 'Test',
+    #         'brewery_name': 'Test Brewery',
+    #         'abv': 5.5,
+    #         'first_brewed': '2024-01-01',
+    #         'comments': 'This is a test'
+    #     })
 
     def test_form_is_valid(self):
         """Test for all fields"""
