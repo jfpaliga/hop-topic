@@ -150,7 +150,7 @@ def new_beer_request(request):
             beer_request.save()
             messages.add_message(
                 request, messages.SUCCESS,
-                'Request receieved - we will look into adding your beer to the database shortly'
+                'Request received - we will look into adding your beer to the database shortly'
             )
 
     return render(

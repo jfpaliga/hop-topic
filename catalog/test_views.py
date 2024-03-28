@@ -1,12 +1,128 @@
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 
-from .forms import ReviewForm
-from .models import Beer
+from catalog.forms import ReviewForm, RequestsForm
+from catalog.models import Beer
+from .views import BeerList, BeerFilterList
 
-# Create your tests here.
-class TestCatalogViews(TestCase):
+
+class TestHomePage(TestCase):
+
+    def setUp(self):
+        self.beer = Beer(
+            pk='1',
+            name='Buzz',
+            tagline='A Real Bitter Experience',
+            first_brewed='09/2007',
+            description='Test description',
+            image_url='https://test.com',
+            abv=5,
+            food_pairing=['testone', 'testtwo', 'testthree'],
+            avg_rating=0
+        )
+        self.beer.save()
+    
+    def test_home_page_view(self):
+        """Test home page HTTP request is successful"""
+        request = RequestFactory().get('/')
+        response = BeerList.as_view()(request)
+        self.assertEqual(response.status_code, 200,
+                         msg="HTTP request not successful")
+
+    def test_home_page_query_by_name(self):
+        """Test search by name functionality on home page"""
+        request = RequestFactory().get('/?query=buzz')
+        request.session = {}
+        response = BeerList.as_view()(request)
+        response.render()
+        self.assertIn(b"A Real Bitter Experience", response.content,
+                      msg="Query by name unsuccessful")
+        
+    def test_home_page_query_by_tagline(self):
+        """Test search by tagline functionality on home page"""
+        request = RequestFactory().get('/?query=bitter')
+        request.session = {}
+        response = BeerList.as_view()(request)
+        response.render()
+        self.assertIn(b"A Real Bitter Experience", response.content,
+                      msg="Query by tagline unsuccessful")
+        
+    def test_home_page_query_by_description(self):
+        """Test search by description functionality on home page"""
+        request = RequestFactory().get('/?query=description')
+        request.session = {}
+        response = BeerList.as_view()(request)
+        response.render()
+        self.assertIn(b"A Real Bitter Experience", response.content,
+                      msg="Query by description unsuccessful")
+
+
+class TestBeerFilterView(TestCase):
+
+    def setUp(self):
+        self.beer_one = Beer(
+            pk='1',
+            name='Beer name one',
+            tagline='Test beer one',
+            first_brewed='testdate',
+            description='Test description',
+            image_url='https://test.com',
+            abv=5,
+            food_pairing=['testone', 'testtwo', 'testthree'],
+            avg_rating=1
+        )
+        self.beer_one.save()
+        self.beer_two = Beer(
+            pk='2',
+            name='Beer name two',
+            tagline='Test beer two',
+            first_brewed='testdate',
+            description='Test description',
+            image_url='https://test.com',
+            abv=11,
+            food_pairing=['testone', 'testtwo', 'testthree'],
+            avg_rating=2
+        )
+        self.beer_two.save()
+
+    def test_filter_page_view(self):
+        """Test filtered home page HTTP request is successful"""
+        request = RequestFactory().get('/filter/rating/1')
+        response = BeerFilterList.as_view()(request,
+                                            filter_type='rating',
+                                            filter_set='1')
+        self.assertEqual(response.status_code, 200,
+                         msg="HTTP request not successful")
+
+    def test_filter_by_rating_view(self):
+        """Test filter by rating functionality"""
+        request = RequestFactory().get('/filter/rating/1')
+        request.session = {}
+        response = BeerFilterList.as_view()(request,
+                                            filter_type='rating',
+                                            filter_set='1')
+        response.render()
+        self.assertIn(b"Beer name one", response.content,
+                      msg="Unfiltered queries are not visible")
+        self.assertNotIn(b"Beer name two", response.content,
+                         msg="Filtered queries are visible")
+        
+    def test_filter_by_abv_view(self):
+        """Test filter by abv functionality"""
+        request = RequestFactory().get('/filter/abv/5to10')
+        request.session = {}
+        response = BeerFilterList.as_view()(request,
+                                            filter_type='abv',
+                                            filter_set='5to10')
+        response.render()
+        self.assertIn(b"Beer name one", response.content,
+                      msg="Unfiltered queries are not visible")
+        self.assertNotIn(b"Beer name two", response.content,
+                         msg="Filtered queries are visible")
+
+
+class TestBeerDetailView(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_superuser(
@@ -76,3 +192,39 @@ class TestCatalogViews(TestCase):
                       msg="Review rating not in review submission")
         self.assertIn(b"This is a test review", response.content, 
                       msg="Review body not in review submission")
+
+
+class TestNewBeerRequestView(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_superuser(
+            username='Username',
+            password='Password',
+            email='test@test.com'
+        )
+    
+    def test_render_request_page_with_form(self):
+        """Test for rendering a page with the requests view"""
+        response = self.client.get(reverse('requests'))
+        self.assertEqual(response.status_code, 200, 
+                         msg="HTTP request not successful")
+        self.assertIsInstance(response.context["request_form"], RequestsForm, 
+                              msg="request_form is not an instance of RequestsForm")
+        
+    def test_successful_request_submission(self):
+        """Test for leaving a request for a beer"""
+        self.client.login(
+            username="Username", password="Password"
+        )
+        request_data = {
+            'beer_name': 'Test',
+            'brewery_name': 'Test brewery',
+            'abv': 5.5,
+            'first_brewed': '2024-01',
+            'comments': 'This is a test'
+        }
+        response = self.client.post(reverse(
+            "requests"), request_data)
+        self.assertEqual(response.status_code, 200, msg="HTTP request not successful")
+        self.assertIn(b"Request received", response.content, 
+                      msg="Request not submitted successfully")

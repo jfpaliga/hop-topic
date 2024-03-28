@@ -26,7 +26,7 @@ class Requests(models.Model):
     """
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="requester")
-    beer_name = models.CharField(max_length=200, unique=True)
+    beer_name = models.CharField(max_length=200)
     brewery_name = models.CharField(max_length=200, blank=True, null=True)
     image = CloudinaryField('image', default='placeholder')
     abv = models.FloatField()
