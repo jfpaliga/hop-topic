@@ -7,6 +7,16 @@ ul {
     background-size: auto;
 }
 
+.beer-card,
+.filter-dropdown {
+    color: #212529;
+}
+
+.beer-card:hover,
+.filter-dropdown:hover {
+    color: #adb5bd;
+}
+
 .beer-img {
     padding-top: 10px;
     height: 300px;

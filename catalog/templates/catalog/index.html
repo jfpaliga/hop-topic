@@ -24,19 +24,19 @@
                         data-bs-toggle="dropdown" aria-expanded="false" aria-label="Click to access dropdown menu to filter by rating">Filter by rating:</button>
                         <ul class="dropdown-menu text-center">
                             <li>
-                                <a href="/filter/rating/5" class="rating-dropdown-item"><div>5</div></a>
+                                <a href="/filter/rating/5" class="filter-dropdown"><div>5</div></a>
                             </li>
                             <li>
-                                <a href="/filter/rating/4" class="rating-dropdown-item"><div>4</div></a>
+                                <a href="/filter/rating/4" class="filter-dropdown"><div>4</div></a>
                             </li>
                             <li>
-                                <a href="/filter/rating/3" class="rating-dropdown-item"><div>3</div></a>
+                                <a href="/filter/rating/3" class="filter-dropdown"><div>3</div></a>
                             </li>
                             <li>
-                                <a href="/filter/rating/2" class="rating-dropdown-item"><div>2</div></a>
+                                <a href="/filter/rating/2" class="filter-dropdown"><div>2</div></a>
                             </li>
                             <li>
-                                <a href="/filter/rating/1" class="rating-dropdown-item"><div>1</div></a>
+                                <a href="/filter/rating/1" class="filter-dropdown"><div>1</div></a>
                             </li>
                         </ul>
                     </div>
@@ -45,13 +45,13 @@
                         data-bs-toggle="dropdown" aria-expanded="false" aria-label="Click to access dropdown menu to filter by ABV">Filter by ABV:</button>
                         <ul class="dropdown-menu text-center">
                             <li>
-                                <a href="/filter/abv/lt5" class="abv-dropdown-item"><div>&lt; 5%</div></a>
+                                <a href="/filter/abv/lt5" class="filter-dropdown"><div>&lt; 5%</div></a>
                             </li>
                             <li>
-                                <a href="/filter/abv/5to10" class="abv-dropdown-item"><div>5 - 10%</div></a>
+                                <a href="/filter/abv/5to10" class="filter-dropdown"><div>5 - 10%</div></a>
                             </li>
                             <li>
-                                <a href="/filter/abv/gt10" class="abv-dropdown-item"><div>&gt; 10%</div></a>
+                                <a href="/filter/abv/gt10" class="filter-dropdown"><div>&gt; 10%</div></a>
                             </li>
                         </ul>
                     </div>
@@ -69,7 +69,7 @@
                     <!-- Beer image-->
                         <img class="card-img-top beer-img mx-auto" src="{{beer.image_url}}" alt="An image of the beer" />
                         <!-- Beer details-->
-                        <div class="card-body p-4 text-center d-flex flex-column align-items-center">
+                        <div class="card-body beer-card p-4 text-center d-flex flex-column align-items-center">
                             <!-- Beer name-->
                             <h5 class="fw-bolder">{{beer.name}}</h5>
                             <!-- Beer tagline-->
@@ -90,10 +90,10 @@
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
-                <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link"> PREV &laquo;</a></li>
+                <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link text-dark"> PREV &laquo;</a></li>
                 {% endif %}
                 {% if page_obj.has_next %}
-                <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+                <li><a href="?page={{ page_obj.next_page_number }}" class="page-link text-dark"> NEXT &raquo;</a></li>
                 {% endif %}
             </ul>
         </nav>
