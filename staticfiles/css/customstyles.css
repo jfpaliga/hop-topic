@@ -3,7 +3,7 @@ ul {
 }
 
 .banner {
-    background-image: url(../assets/beer-banner.webp);
+    background-image: url('https://d2mth59baonaf5.cloudfront.net/beer-banner.webp');
     background-size: auto;
 }
 
