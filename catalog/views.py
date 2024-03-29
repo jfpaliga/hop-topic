@@ -20,19 +20,20 @@ class BeerList(generic.ListView):
         query = self.request.GET.get('query')
         if query:
             queryset = queryset.filter(
-                Q(name__icontains=query) | 
-                Q(tagline__icontains=query) | 
+                Q(name__icontains=query) |
+                Q(tagline__icontains=query) |
                 Q(description__icontains=query)
             ).values()
 
         return queryset
-    
+
 
 class BeerFilterList(BeerList):
-    
+
     def get_queryset(self):
         if self.kwargs['filter_type'] == 'rating':
-            queryset = Beer.objects.filter(avg_rating=int(self.kwargs['filter_set']))
+            queryset = Beer.objects.filter(
+                avg_rating=int(self.kwargs['filter_set']))
         elif self.kwargs['filter_type'] == 'abv':
             if self.kwargs['filter_set'] == 'lt5':
                 queryset = Beer.objects.filter(abv__lt=5)
@@ -42,7 +43,7 @@ class BeerFilterList(BeerList):
                 queryset = Beer.objects.filter(abv__gt=10)
 
         return queryset
-   
+
 
 def beer_detail(request, id):
     """
@@ -117,7 +118,9 @@ def edit_review(request, id, review_id):
             review.save()
             messages.add_message(request, messages.SUCCESS, 'Review Updated!')
         else:
-            messages.add_message(request, messages.ERROR, 'Error updating review!')
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 'Error updating review!')
 
     return HttpResponseRedirect(reverse('beer_detail', args=[id]))
 
@@ -134,7 +137,9 @@ def delete_review(request, id, review_id):
         review.delete()
         messages.add_message(request, messages.SUCCESS, 'Comment deleted!')
     else:
-        messages.add_message(request, messages.ERROR, 'You can only delete your own reviews!')
+        messages.add_message(request,
+                             messages.ERROR,
+                             'You can only delete your own reviews!')
 
     return HttpResponseRedirect(reverse('beer_detail', args=[id]))
 
@@ -150,7 +155,7 @@ def new_beer_request(request):
             beer_request.save()
             messages.add_message(
                 request, messages.SUCCESS,
-                'Request received - we will look into adding your beer to the database shortly'
+                'Request received - we will look into adding your beer shortly'
             )
 
     return render(

@@ -51,7 +51,8 @@ class TestRequestsForm(TestCase):
             'first_brewed': '2024-01',
             'comments': 'This is a test'
         })
-        self.assertFalse(type(request_form['abv']) == float, msg="Abv is a float")
+        self.assertFalse(type(request_form['abv']) == float,
+                         msg="Abv is a float")
 
     def test_first_brewed_is_not_empty(self):
         """Test for first_brewed field"""
@@ -89,12 +90,13 @@ class TestRequestsForm(TestCase):
         })
         self.assertFalse(request_form.is_valid(), msg="Comments is valid")
 
+
 class TestReviewForm(TestCase):
 
     def test_form_is_valid(self):
         """Test for all fields"""
         review_form = ReviewForm({
-            'rating': 5, 
+            'rating': 5,
             'body': 'An excellent review'
             })
         self.assertTrue(review_form.is_valid(), msg='Form is not valid')

@@ -1,5 +1,5 @@
-import requests, json
-from datetime import datetime
+import requests
+import json
 
 API_URL = "https://api.punkapi.com/v2/beers"
 API_PROPERTIES = ["ibu", "target_fg", "target_og", "ebc",

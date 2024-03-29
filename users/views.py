@@ -12,15 +12,16 @@ class ReviewList(generic.View):
     model = Review
     template_name = "users/all_reviews.html"
 
-
     def get(self, request, *args, **kwargs):
-        
+
         if request.GET.get('query'):
             query = request.GET.get('query')
             if query in User.objects.values_list("username", flat=True):
                 return redirect('user_reviews', query)
             else:
-                messages.add_message(request, messages.ERROR, 'User does not exist!')
+                messages.add_message(request,
+                                     messages.ERROR,
+                                     'User does not exist!')
                 return HttpResponseRedirect(reverse('all_reviews'))
 
         queryset = self.get_queryset()
@@ -31,12 +32,11 @@ class ReviewList(generic.View):
             context
         )
 
-
     def get_queryset(self):
-        queryset = Review.objects.filter(is_approved=True).order_by("-created_on")
+        queryset = Review.objects.filter(
+            is_approved=True).order_by("-created_on")
         return queryset
-    
-    
+
     def get_context_data(self, queryset):
         return {"review_list": queryset}
 

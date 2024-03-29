@@ -22,7 +22,7 @@ class TestHomePage(TestCase):
             avg_rating=0
         )
         self.beer.save()
-    
+
     def test_home_page_view(self):
         """Test home page HTTP request is successful"""
         request = RequestFactory().get('/')
@@ -38,7 +38,7 @@ class TestHomePage(TestCase):
         response.render()
         self.assertIn(b"A Real Bitter Experience", response.content,
                       msg="Query by name unsuccessful")
-        
+
     def test_home_page_query_by_tagline(self):
         """Test search by tagline functionality on home page"""
         request = RequestFactory().get('/?query=bitter')
@@ -47,7 +47,7 @@ class TestHomePage(TestCase):
         response.render()
         self.assertIn(b"A Real Bitter Experience", response.content,
                       msg="Query by tagline unsuccessful")
-        
+
     def test_home_page_query_by_description(self):
         """Test search by description functionality on home page"""
         request = RequestFactory().get('/?query=description')
@@ -107,7 +107,7 @@ class TestBeerFilterView(TestCase):
                       msg="Unfiltered queries are not visible")
         self.assertNotIn(b"Beer name two", response.content,
                          msg="Filtered queries are visible")
-        
+
     def test_filter_by_abv_view(self):
         """Test filter by abv functionality"""
         request = RequestFactory().get('/filter/abv/5to10')
@@ -147,35 +147,35 @@ class TestBeerDetailView(TestCase):
         """Test for rendering a page with the beer_detail view"""
         response = self.client.get(reverse(
             'beer_detail', args=[999]))
-        self.assertEqual(response.status_code, 200, 
+        self.assertEqual(response.status_code, 200,
                          msg="HTTP request not successful")
-        self.assertIn(b"Beer name", response.content, 
+        self.assertIn(b"Beer name", response.content,
                       msg="Name not in view")
-        self.assertIn(b"Test beer", response.content, 
+        self.assertIn(b"Test beer", response.content,
                       msg="Tagline not in view")
-        self.assertIn(b"Rating: 0", response.content, 
+        self.assertIn(b"Rating: 0", response.content,
                       msg="Rating not in view")
-        self.assertIn(b"https://test.com", response.content, 
+        self.assertIn(b"https://test.com", response.content,
                       msg="Image not in view")
-        self.assertIn(b"testdate", response.content, 
+        self.assertIn(b"testdate", response.content,
                       msg="First brewed date not in view")
-        self.assertIn(b"5%", response.content, 
+        self.assertIn(b"5%", response.content,
                       msg="ABV not in view")
-        self.assertIn(b"Test description", response.content, 
+        self.assertIn(b"Test description", response.content,
                       msg="Description not in view")
 
         for food in self.beer.food_pairing:
             food_bytes = bytearray(food, 'utf-8')
-            self.assertIn(food_bytes, response.content, 
+            self.assertIn(food_bytes, response.content,
                           msg="Food pairing not in view")
 
-        self.assertIn("reviews_count", response.context, 
+        self.assertIn("reviews_count", response.context,
                       msg="Reviews count not in view")
-        self.assertIn("reviews", response.context, 
+        self.assertIn("reviews", response.context,
                       msg="Reviews not in view")
-        self.assertIsInstance(response.context["review_form"], ReviewForm, 
-                              msg="review_form is not an instance of ReviewForm")
-        
+        self.assertIsInstance(response.context["review_form"], ReviewForm,
+                              msg="review_form not an instance of ReviewForm")
+
     def test_successful_review_submission(self):
         """Test for leaving a review on a beer"""
         self.client.login(
@@ -187,10 +187,11 @@ class TestBeerDetailView(TestCase):
         }
         response = self.client.post(reverse(
             "beer_detail", args=[999]), review_data)
-        self.assertEqual(response.status_code, 200, msg="HTTP request not successful")
-        self.assertIn(b'User rating: 5', response.content, 
+        self.assertEqual(response.status_code, 200,
+                         msg="HTTP request not successful")
+        self.assertIn(b'User rating: 5', response.content,
                       msg="Review rating not in review submission")
-        self.assertIn(b"This is a test review", response.content, 
+        self.assertIn(b"This is a test review", response.content,
                       msg="Review body not in review submission")
 
 
@@ -202,15 +203,15 @@ class TestNewBeerRequestView(TestCase):
             password='Password',
             email='test@test.com'
         )
-    
+
     def test_render_request_page_with_form(self):
         """Test for rendering a page with the requests view"""
         response = self.client.get(reverse('requests'))
-        self.assertEqual(response.status_code, 200, 
+        self.assertEqual(response.status_code, 200,
                          msg="HTTP request not successful")
-        self.assertIsInstance(response.context["request_form"], RequestsForm, 
-                              msg="request_form is not an instance of RequestsForm")
-        
+        self.assertIsInstance(response.context["request_form"], RequestsForm,
+                              msg="form not an instance of RequestsForm")
+
     def test_successful_request_submission(self):
         """Test for leaving a request for a beer"""
         self.client.login(
@@ -225,6 +226,7 @@ class TestNewBeerRequestView(TestCase):
         }
         response = self.client.post(reverse(
             "requests"), request_data)
-        self.assertEqual(response.status_code, 200, msg="HTTP request not successful")
-        self.assertIn(b"Request received", response.content, 
+        self.assertEqual(response.status_code, 200,
+                         msg="HTTP request not successful")
+        self.assertIn(b"Request received", response.content,
                       msg="Request not submitted successfully")

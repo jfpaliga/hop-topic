@@ -7,7 +7,7 @@ from datetime import datetime
 from catalog.models import Requests
 from users.models import Review
 
-CHOICES = {"1": 1, "2": 2, "3": 3, "4": 4, "5": 5,}
+CHOICES = {"1": 1, "2": 2, "3": 3, "4": 4, "5": 5, }
 
 
 class RequestsForm(forms.ModelForm):
@@ -19,7 +19,14 @@ class RequestsForm(forms.ModelForm):
         Specify the django model and order of the fields
         """
         model = Requests
-        fields = ('beer_name', 'brewery_name', 'image', 'abv', 'first_brewed', 'comments',)
+        fields = (
+            'beer_name',
+            'brewery_name',
+            'image',
+            'abv',
+            'first_brewed',
+            'comments',
+            )
         widgets = {
             'first_brewed': forms.DateInput(attrs={'type': 'month'}),
         }
@@ -40,7 +47,7 @@ class RequestsForm(forms.ModelForm):
 
 class ReviewForm(forms.ModelForm):
     """
-    Form class for users to leave a review on a beer 
+    Form class for users to leave a review on a beer
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -50,7 +57,7 @@ class ReviewForm(forms.ModelForm):
         self.helper.layout = Layout(
             InlineRadios('rating'),
             Field('body'),
-            Submit('submit', 'Submit', css_id = 'submitButton'),
+            Submit('submit', 'Submit', css_id='submitButton'),
         )
 
     class Meta:
@@ -59,6 +66,6 @@ class ReviewForm(forms.ModelForm):
         """
         model = Review
         fields = ('rating', 'body',)
-        widgets ={
+        widgets = {
             'rating': forms.RadioSelect(choices=CHOICES,)
         }

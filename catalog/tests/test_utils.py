@@ -44,7 +44,7 @@ class TestGetBeerAvgRating(TestCase):
             is_approved=False,
         )
         self.review_two.save()
-    
+
     def test_get_beer_average_rating_one_review(self):
         """Test the average rating function works correctly for one review"""
         avg_rating = get_beer_average_rating(self.beer)
@@ -59,27 +59,31 @@ class TestGetBeerAvgRating(TestCase):
 
     def test_handlers_update_new_reviews(self):
         """
-        Test that beer.avg_rating is correct from set up and then test the handler
-        correctly updates beer.avg_rating when a new review is approved
+        Test that beer.avg_rating is correct from set up and then test
+        the handler correctly updates beer.avg_rating when a new review
+        is approved
         """
         self.assertEqual(self.beer.avg_rating, 3.0,
-                         msg="Handler has not updated beer with rating from review_one")
+                         msg="Handler not updated rating from review_one")
         self.review_two.is_approved = True
         self.review_two.save()
         self.assertEqual(self.beer.avg_rating, 4.0,
-                         msg="Handler has not updated beer with rating from review_two")
-        
+                         msg="Handler not updated rating from review_two")
+
     def test_handlers_delete_review(self):
-        """Test the handler correctly updates beer.avg_rating when a review is deleted"""
+        """
+        Test the handler correctly updates beer.avg_rating
+        when a review is deleted
+        """
         self.review_two.is_approved = True
         self.review_two.save()
         self.review_one.delete()
         self.assertEqual(self.beer.avg_rating, 5.0,
-                         msg="Handler has not updated beer after review_one is deleted")
+                         msg="Handler not updated after review_one is deleted")
 
 
 class TestGetRandomBeer(TestCase):
-    
+
     def setUp(self):
         self.beer_one = Beer(
             pk='1',
@@ -136,7 +140,7 @@ class TestGetRandomBeer(TestCase):
         cache.set("prev_random_beers", [{'pk': 1, 'date': today}])
         self.assertEqual(get_random_beer_pk(), 1,
                          msg="Random beer pk is not today's beer")
-        
+
     def test_new_random_beer_if_today_not_cached(self):
         """
         Test that if no beer has been cached today, a new beer is cached
@@ -146,5 +150,4 @@ class TestGetRandomBeer(TestCase):
         cache.set("prev_random_beers", [{'pk': 2, 'date': yesterday},
                                         {'pk': 1, 'date': day_before}])
         self.assertEqual(get_random_beer_pk(), 3,
-                         msg="Random beer pk is selecting an already cached beer pk")
-        
+                         msg="Random beer pk is already a cached beer pk")

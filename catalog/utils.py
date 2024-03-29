@@ -3,6 +3,7 @@ from django.core.cache import cache
 
 from .models import Beer
 
+
 def get_beer_average_rating(beer):
     """
     Update the beer avg rating when a new review is approved
@@ -28,12 +29,12 @@ def get_random_beer_pk():
     if prev_random_beers and prev_random_beers[0]['date'] == today:
         random_beer_pk = prev_random_beers[0]['pk']
     else:
-        prev_beer_pks = [ beer['pk'] for beer in prev_random_beers ]
+        prev_beer_pks = [beer['pk'] for beer in prev_random_beers]
         random_beer = None
-        
+
         while random_beer is None or random_beer.pk in prev_beer_pks:
             random_beer = Beer.objects.order_by('?').first()
-        
+
         random_beer_pk = random_beer.pk
         prev_random_beers.insert(0, {'pk': random_beer_pk,
                                      'date': today})
