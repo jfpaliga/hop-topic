@@ -67,7 +67,7 @@
                 <div class="card h-100">
                     <a class="beer-card" href="{% url 'beer_detail' beer.id %}">
                     <!-- Beer image-->
-                        <img class="card-img-top beer-img" src="{{beer.image_url}}" alt="An image of the beer" />
+                        <img fetchpriority="low" class="card-img-top beer-img" src="{{beer.image_url}}" alt="An image of the beer" />
                         <!-- Beer details-->
                         <div class="card-body p-4 text-center d-flex flex-column align-items-center">
                             <!-- Beer name-->

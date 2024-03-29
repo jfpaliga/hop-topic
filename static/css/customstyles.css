@@ -3,8 +3,10 @@ ul {
 }
 
 .banner {
-    background-image: url('https://d2mth59baonaf5.cloudfront.net/beer-banner.webp');
-    background-size: auto;
+    background-image: url('https://d2mth59baonaf5.cloudfront.net/beerbanner.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: center;
 }
 
 .beer-card,
