@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.views import generic
 
 from .models import Review
