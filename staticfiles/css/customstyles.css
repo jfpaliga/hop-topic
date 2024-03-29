@@ -25,17 +25,6 @@ ul {
     object-fit: contain;
 }
 
-.btn-signup {
-    background-color: #946B5F;
-    color: #EEEDE7;
-}
-
-.btn-signup:hover,
-.btn-signup:active {
-    background-color: #212529;
-    color: #EEEDE7;
-}
-
 .page-link {
     margin: 0 5px 0 5px;
     text-decoration: none;
