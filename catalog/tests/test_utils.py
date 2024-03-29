@@ -5,7 +5,7 @@ from django.test import TestCase
 
 from catalog.models import Beer
 from users.models import Review
-from .utils import get_random_beer_pk, get_beer_average_rating
+from catalog.utils import get_random_beer_pk, get_beer_average_rating
 
 
 class TestGetBeerAvgRating(TestCase):

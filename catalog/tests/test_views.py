@@ -4,7 +4,7 @@ from django.test import RequestFactory, TestCase
 
 from catalog.forms import ReviewForm, RequestsForm
 from catalog.models import Beer
-from .views import BeerList, BeerFilterList
+from catalog.views import BeerList, BeerFilterList
 
 
 class TestHomePage(TestCase):

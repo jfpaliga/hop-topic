@@ -4,7 +4,7 @@ from django.test import RequestFactory, TestCase
 
 from catalog.models import Beer
 from users.models import Review
-from .views import ReviewList, user_reviews
+from users.views import ReviewList, user_reviews
 
 
 class TestAllReviewsPage(TestCase):
