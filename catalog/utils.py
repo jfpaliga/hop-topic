@@ -28,8 +28,10 @@ def get_random_beer_pk():
     if prev_random_beers and prev_random_beers[0]['date'] == today:
         random_beer_pk = prev_random_beers[0]['pk']
     else:
+        prev_beer_pks = [ beer['pk'] for beer in prev_random_beers ]
         random_beer = None
-        while random_beer is None or random_beer.pk in prev_random_beers:
+        
+        while random_beer is None or random_beer.pk in prev_beer_pks:
             random_beer = Beer.objects.order_by('?').first()
         
         random_beer_pk = random_beer.pk
