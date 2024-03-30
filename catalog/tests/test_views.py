@@ -159,7 +159,7 @@ class TestBeerDetailView(TestCase):
                       msg="Image not in view")
         self.assertIn(b"testdate", response.content,
                       msg="First brewed date not in view")
-        self.assertIn(b"5%", response.content,
+        self.assertIn(b"5.0%", response.content,
                       msg="ABV not in view")
         self.assertIn(b"Test description", response.content,
                       msg="Description not in view")
@@ -189,7 +189,7 @@ class TestBeerDetailView(TestCase):
             "beer_detail", args=[999]), review_data)
         self.assertEqual(response.status_code, 200,
                          msg="HTTP request not successful")
-        self.assertIn(b'User rating: 5', response.content,
+        self.assertIn(b'Rating: 5', response.content,
                       msg="Review rating not in review submission")
         self.assertIn(b"This is a test review", response.content,
                       msg="Review body not in review submission")

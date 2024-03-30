@@ -33,14 +33,19 @@ class BeerFilterList(BeerList):
     def get_queryset(self):
         if self.kwargs['filter_type'] == 'rating':
             queryset = Beer.objects.filter(
-                avg_rating=int(self.kwargs['filter_set']))
+                avg_rating=int(self.kwargs['filter_set'])
+                ).order_by("-avg_rating")
         elif self.kwargs['filter_type'] == 'abv':
             if self.kwargs['filter_set'] == 'lt5':
-                queryset = Beer.objects.filter(abv__lt=5)
+                queryset = Beer.objects.filter(
+                    abv__lt=5).order_by("-avg_rating")
             elif self.kwargs['filter_set'] == '5to10':
-                queryset = Beer.objects.filter(abv__gte=5, abv__lte=10)
+                queryset = Beer.objects.filter(
+                    abv__gte=5,
+                    abv__lte=10).order_by("-avg_rating")
             elif self.kwargs['filter_set'] == 'gt10':
-                queryset = Beer.objects.filter(abv__gt=10)
+                queryset = Beer.objects.filter(
+                    abv__gt=10).order_by("-avg_rating")
 
         return queryset
 
