@@ -44,5 +44,5 @@ for (let button of deleteButtons) {
         let reviewId = e.target.getAttribute("data-review_id");
         deleteConfirm.href = `delete_review/${reviewId}`;
         deleteModal.show();
-    })
+    });
 }
