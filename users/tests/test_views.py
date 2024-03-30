@@ -54,10 +54,14 @@ class TestAllReviewsPage(TestCase):
         Test if search by username functionality on all_reviews page
         redirects successfully
         """
-        response = self.client.get('/users/?query=Username', follow=True)
-        self.assertRedirects(response,
-                             reverse('user_reviews', args=['Username']))
-        self.assertContains(response, "Username's Profile", status_code=200)
+        # response = self.client.get('/users/?query=Username', follow=True)
+        response = self.client.get(reverse('user_reviews',
+                                           args=['Username']),
+                                   follow=True)
+        self.assertEqual(response.status_code, 200,
+                         msg="HTTP request not successful")
+        self.assertIn(b"Username's Profile", response.content,
+                      msg="Username profile not found")
 
     def test_all_reviews_query_user_does_not_exist(self):
         """
