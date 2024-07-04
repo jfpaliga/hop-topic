@@ -67,7 +67,11 @@
                 <div class="card h-100">
                     <a class="beer-card" href="{% url 'beer_detail' beer.id %}">
                     <!-- Beer image-->
-                        <img fetchpriority="low" class="card-img-top beer-img" src="{{beer.image_url}}" alt="An image of the beer">
+                        {% if "placeholder" in beer.beer_image.url %}
+                        <img fetchpriority="low" class="card-img-top beer-img" src="{% static 'assets/placeholder_beer.webp' %}" alt="An image of the beer">
+                        {% else %}
+                        <img fetchpriority="low" class="card-img-top beer-img" src="{{ beer.beer_image.url }}" alt="An image of the beer">
+                        {% endif %}
                         <!-- Beer details-->
                         <div class="card-body p-4 text-center d-flex flex-column align-items-center">
                             <!-- Beer name-->

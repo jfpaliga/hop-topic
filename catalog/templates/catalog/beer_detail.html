@@ -14,7 +14,11 @@
 </div>
 <div class="row g-0 text-center">
     <div class="d-none d-md-block col-md-12">
-        <img src="{{beer.image_url}}" alt="An image of {{beer.name}}" class="beer-img mx-auto">
+        {% if "placeholder" in beer.beer_image.url %}
+        <img src="{% static 'assets/placeholder_beer.webp' %}" alt="A placeholder beer image" class="beer-img mx-auto">
+        {% else %}
+        <img src="{{beer.beer_image.url}}" alt="An image of {{beer.name}}" class="beer-img mx-auto">
+        {% endif %}
     </div>
 </div>
 <div class="container card text-center mt-2 mb-2">

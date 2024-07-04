@@ -11,7 +11,7 @@ class Beer(models.Model):
     tagline = models.CharField(max_length=200, unique=True)
     first_brewed = models.CharField(max_length=100)
     description = models.TextField()
-    image_url = models.URLField()
+    beer_image = CloudinaryField('image', default='placeholder')
     abv = models.FloatField()
     food_pairing = models.JSONField()
     avg_rating = models.DecimalField(decimal_places=1, max_digits=2, default=0)
