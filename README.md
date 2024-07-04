@@ -15,6 +15,8 @@
 
 ## Introduction
 
+**DISCLAIMER**: The API used to create this project no longer exists. If you wish to clone this repository for yourself, you will need to amend the apicall.py to gather data from an API of your choice.
+
 The [Hop Topic](https://hop-topic-7a426dfa7c2e.herokuapp.com/) project is a full stack web application built with the Django framework.
 
 The website allows users to view a database of beers, ranked by their average rating as given by other users, and any reviews that have been left on a beer. Registered users can leave reviews on beers, edit or delete any of their own existing reviews and send a request for new beers to be added to the database. Site superusers have full access to CRUD functionality for beers, reviews and requests.
