@@ -47,6 +47,19 @@
                             <a class="nav-link text-light {% if request.path == login_url %}active{% endif %}" aria-current="page" href="{% url 'account_login' %}">Login</a>
                         </li>
                         {% endif %}
+                        {% if user.is_staff %}
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle navbarDropdown text-light" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-label="navbarDropdown">
+                                <li>
+                                    <a href="{% url 'manage_beers' %}" class="dropdown-item">Manage Beers</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'manage_requests' %}" class="dropdown-item">Manage Requests</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

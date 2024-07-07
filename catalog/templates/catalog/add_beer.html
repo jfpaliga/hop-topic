@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load cloudinary %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 my-3 d-flex flex-column justify-content-center">
+            {% if user.is_staff %}
+            <h2 class="border-bottom border-dark text-center pb-3">Add New Beer</h2>
+            <form id="beerForm" method="post">
+                {{ beer_form | crispy }}
+                {% csrf_token %}
+                <button id="submitButton" type="submit" class="btn btn-secondary">Submit</button>
+            </form>
+            {% else %}
+            <h3 class="text-center">Access Denied! You don't have permission to be here</h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

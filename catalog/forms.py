@@ -4,7 +4,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Submit
 from datetime import datetime
 
-from catalog.models import Requests
+from catalog.models import Requests, Beer
 from users.models import Review
 
 CHOICES = {"1": 1, "2": 2, "3": 3, "4": 4, "5": 5, }
@@ -69,3 +69,25 @@ class ReviewForm(forms.ModelForm):
         widgets = {
             'rating': forms.RadioSelect(choices=CHOICES,)
         }
+
+
+class BeerForm(forms.ModelForm):
+    """
+    Form class for adding and editing beers in the
+    database in the frontend
+    """
+    class Meta:
+        """
+        Specify the django model and order of the fields
+        """
+        model = Beer
+        fields = (
+            'name',
+            'tagline',
+            'first_brewed',
+            'description',
+            'beer_image',
+            'abv',
+            'food_pairing',
+            'avg_rating',
+        )

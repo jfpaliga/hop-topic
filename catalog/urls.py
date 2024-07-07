@@ -12,5 +12,14 @@ urlpatterns = [
     path('beeroftheday', views.beer_of_the_day, name='beer_of_the_day'),
     path('filter/<filter_type>/<filter_set>',
          views.BeerFilterList.as_view(), name='filter'),
-    path('requests', views.new_beer_request, name='requests')
+    path('requests', views.new_beer_request, name='requests'),
+    path('manage_beers', views.ManageBeersList.as_view(),
+         name='manage_beers'),
+    path('manage_requests', views.ManageRequestsList.as_view(),
+         name='manage_requests'),
+    path('manage_beers/<int:pk>/', views.EditBeerView.as_view(),
+         name='edit_beer'),
+    path('manage_beers/add_beer', views.add_new_beer, name='add_beer'),
+    path('manage_beers/delete_beer/<int:id>', views.delete_beer,
+         name='delete_beer'),
 ]

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="py-5">
+
+{% if user.is_staff %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 my-3 d-flex flex-column justify-content-center">
+                <h1 class="display-5 fw-bold">Edit Beer</h1>
+                {% load cloudinary %}
+                <div class="form-floating">
+                    <form action="#" method="POST" enctype="multipart/form-data">
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        <br>
+                        <button type="submit" class="btn btn-outline-success me-2">Update</button>
+                        <a href="{{ request.META.HTTP_REFERER|escape }}" class="btn btn-outline-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="col-lg-6 mx-auto">
+        <h3>Access Denied! You don't have permission to be here!</h3>
+    </div>
+
+{% endif %}
+
+</section>
+
+{% endblock %}

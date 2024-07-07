@@ -1,12 +1,15 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import generic
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+from django.urls import reverse_lazy
 
-from catalog.models import Beer
+from catalog.models import Beer, Requests
 from users.models import Review
-from .forms import RequestsForm, ReviewForm
+from .forms import RequestsForm, ReviewForm, BeerForm
 from .utils import get_random_beer_pk
 
 
@@ -48,6 +51,39 @@ class BeerFilterList(BeerList):
                     abv__gt=10).order_by("-avg_rating")
 
         return queryset
+    
+
+class ManageBeersList(LoginRequiredMixin, generic.ListView):
+    """
+    Shows page to to create, read, update or delete beers
+    in the database from the frontend
+    """
+    model = Beer
+    queryset = Beer.objects.order_by("-id")
+    template_name = "catalog/manage_beers.html"
+    paginate_by = 8
+
+
+class ManageRequestsList(LoginRequiredMixin, generic.ListView):
+    """
+    Shows page to create, read, update or delete requests
+    in the database from the frontend
+    """
+    model = Requests
+    queryset = Requests.objects.order_by("-id")
+    template_name = "catalog/manage_requests.html"
+    paginate_by = 8
+
+
+class EditBeerView(SuccessMessageMixin, generic.UpdateView):
+    """
+    View for editing an individual beer
+    """
+    model = Beer
+    form_class = BeerForm
+    template_name = "catalog/edit_beer.html"
+    success_message = "The beer was edited successfully!"
+    success_url = reverse_lazy("manage_beers")
 
 
 def beer_detail(request, id):
@@ -170,3 +206,42 @@ def new_beer_request(request):
             "request_form": request_form
         }
     )
+
+
+def add_new_beer(request):
+    beer_form = BeerForm()
+
+    if request.method == "POST":
+        beer_form = BeerForm(data=request.POST)
+        if beer_form.is_valid():
+            beer_form.save()
+            messages.add_message(
+                request, messages.SUCCESS,
+                'New beer has successfully been added to the database!'
+            )
+
+    return render(
+        request,
+        "catalog/add_beer.html",
+        {
+            "beer_form": beer_form
+        }
+    )
+
+
+def delete_beer(request, id):
+    """
+    View to delete beers
+    """
+    queryset = Beer.objects.all()
+    beer = get_object_or_404(queryset, id=id)
+
+    if request.user.is_staff:
+        beer.delete()
+        messages.add_message(request, messages.SUCCESS, 'Beer deleted!')
+    else:
+        messages.add_message(request,
+                             messages.ERROR,
+                             'You do not have permission to delete!')
+
+    return HttpResponseRedirect(reverse('manage_beers'))
