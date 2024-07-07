@@ -23,6 +23,8 @@ The website allows users to view a database of beers, ranked by their average ra
 
 ![Screenshot from amiresponsive of the website on different media devices](docs/images/responsive.png)
 
+[Back to the top](#table-of-contents)
+
 ## User Experience
 
 ### User Stories
@@ -52,6 +54,8 @@ The website allows users to view a database of beers, ranked by their average ra
 3. Create, read, update and delete reviews.
 4. Approve or disapprove requests for beers to be added to the database.
 5. Create, read, update and delete requests for beers to be added to the database.
+
+[Back to the top](#table-of-contents)
 
 ## Planning
 
@@ -83,6 +87,8 @@ Initial wireframes were built using [Balsamiq](https://balsamiq.com/). The wiref
 ![Image of the wireframe for the all reviews page](docs/images/wireframe_mobile_reviews.png)
 
 ![Image of the wireframe for the request page](docs/images/wireframe_mobile_request.png)
+
+[Back to the top](#table-of-contents)
 
 ## Features
 
@@ -189,6 +195,8 @@ The Request a Beer page allows a user to fill out a form with the information on
 - Front end admin page for superusers.
 - A 'favourite' option to allow users to add beers to a favourite list.
 
+[Back to the top](#table-of-contents)
+
 ## Technologies Used
 
 The technologies used throughout the planning, design, testing and deployment are listed below:
@@ -278,6 +286,8 @@ The technologies used throughout the planning, design, testing and deployment ar
 - [VSCode](https://code.visualstudio.com/)
 
     Code editor used in development
+
+[Back to the top](#table-of-contents)
 
 ## Testing
 
@@ -384,6 +394,8 @@ Accessibility scores were high on both mobile and desktop.
 ![Lighthouse](docs/images/readme_lighthouse_mobile.png)
 ![Lighthouse](docs/images/readme_lighthouse_desktop.png)
 
+[Back to the top](#table-of-contents)
+
 ## Deployment
 
 ### Heroku Deployment
@@ -404,6 +416,8 @@ The application was deployed using [Heroku](https://www.heroku.com/) following t
 12. Scroll down to the bottom of the Deploy page and select one of the two deployment options:
     * In the Automatic deploy section, select the appropriate branch from the dropdown menu and click the **Enable Automatic Deploys** button. This will deploy the app automatically when an update is pushed to GitHub.
     * In the Manual deploy section, select the appropriate branch from the dropwdown menu and click the **Deploy Branch** button. This will only deploy the current branch. Any further updates will require the app to be re-deployed.
+
+[Back to the top](#table-of-contents)
 
 ## Forking and Cloning
 
@@ -443,6 +457,8 @@ When adding any environment variables to your local environment, ensure that `en
 2. Create a superuser by running `python manage.py createsuperuser` in the terminal
 3. Run the server by running `python manage.py runserver` in the terminal. Ensure `DEBUG = True` to get more information about any errors that may occur. Be careful to set `DEBUG = False` before deployment to a live environment.
 
+[Back to the top](#table-of-contents)
+
 ## Credits
 
 ### Content
@@ -455,3 +471,4 @@ When adding any environment variables to your local environment, ensure that `en
 - I would like to thank my CodeInstitute Mentor, Okwudiri Okoro, for all of his help in this project and in particular regard to signals, handlers and decorators.
 - I would like to thank my friends Chris Blunt and Kyle Oxberry, for their assistance and feedback in user testing.
 
+[Back to the top](#table-of-contents)
