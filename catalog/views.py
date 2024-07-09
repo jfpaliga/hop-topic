@@ -75,6 +75,16 @@ class ManageRequestsList(LoginRequiredMixin, generic.ListView):
     paginate_by = 8
 
 
+class ManageReviewsList(LoginRequiredMixin, generic.ListView):
+    """
+    Shows page to create, read, update or delete requests
+    in the database from the frontend
+    """
+    model = Review
+    queryset = Review.objects.order_by("-created_on")
+    template_name = "catalog/manage_reviews.html"
+
+
 class EditBeerView(SuccessMessageMixin, generic.UpdateView):
     """
     View for editing an individual beer
@@ -262,7 +272,9 @@ def post_request(request, id):
     """
     View to add requested beer to beer database
     """
-    beer_request = Requests.objects.get(pk=id)
+    queryset = Requests.objects.all()
+    beer_request = get_object_or_404(queryset, id=id)
+
     beer_form = BeerForm(data={
         "name": beer_request.beer_name,
         "tagline": f"""{beer_request.beer_name},
@@ -306,3 +318,40 @@ def delete_request(request, id):
                              'You do not have permission to delete!')
 
     return HttpResponseRedirect(reverse('manage_requests'))
+
+
+def approve_review(request, id):
+    """
+    View to approve reviews as an admin
+    """
+    queryset = Review.objects.all()
+    review = get_object_or_404(queryset, id=id)
+
+    if request.user.is_staff:
+        review.is_approved = True
+        review.save()
+        messages.add_message(request, messages.SUCCESS, 'Review approved!')
+    else:
+        messages.add_message(request,
+                             messages.ERROR,
+                             'You do not have permission to approve reviews!')
+        
+    return HttpResponseRedirect(reverse('manage_reviews'))
+
+
+def delete_review(request, id):
+    """
+    View to delete reviews as an admin
+    """
+    queryset = Review.objects.all()
+    review = get_object_or_404(queryset, id=id)
+
+    if request.user.is_staff:
+        review.delete()
+        messages.add_message(request, messages.SUCCESS, 'Review deleted!')
+    else:
+        messages.add_message(request,
+                             messages.ERROR,
+                             'You do not have permission to delete!')
+
+    return HttpResponseRedirect(reverse('manage_reviews'))

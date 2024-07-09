@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Section -->
+<section class="py-5">
+{% if user.is_staff %}
+    <!-- Reviews list -->
+    <div class="container px-4 px-lg-5 mt-5">
+        {% for review in object_list %}
+        <div class="card mb-3 p-3">
+            <div class="row g-0">
+                <div class="col-md-4 d-flex flex-column align-items-sm-center align-items-lg-start">
+                    <p class="card-title fw-bold">Review: <a class="fw-normal text-decoration-underline" href="{% url 'beer_detail' review.beer.id %}">{{ review.beer.name }}</a></p>
+                    <p class="card-text fw-bold">Author: <a class="fw-normal" href="{% url 'user_reviews' review.author.username %}">{{ review.author }}</a></p>
+                    <p class="card-text">Created on: {{ review.created_on }}</p>
+                    <p class="card-text">Last updated: {{ review.updated_on }}</p>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-title fw-bold">Rating: <span class="fw-normal">{{ review.rating }} / 5</span></p>
+                        <p class="card-text fw-bold">Review:</p>
+                        <p class="card-text py-3 border-top border-bottom border-dark">{{ review.body | safe}}</p>
+                    </div>
+                    {% if review.is_approved == False %}
+                    <a href="{% url 'approve_review' review.id %}" class="btn btn-sm btn-success">Approve</a>
+                    {% endif %}
+                    <button class="btn btn-delete btn-sm btn-danger" data-review_id="{{ review.id }}">Delete</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- Delete confirmation modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Review?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this review?
+                    This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="col-lg-6 mx-auto">
+        <h3 class="text-center">Access Denied! You don't have permission to be here!</h3>
+    </div>
+
+{% endif %}
+
+</section>
+
+{% endblock %}
+
+{% block extras %}
+<script src="{% static 'js/managereviewbuttons.js' %}"></script>
+{% endblock %}
