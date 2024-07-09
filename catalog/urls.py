@@ -22,4 +22,10 @@ urlpatterns = [
     path('manage_beers/add_beer', views.add_new_beer, name='add_beer'),
     path('manage_beers/delete_beer/<int:id>', views.delete_beer,
          name='delete_beer'),
+    path('manage_requests/<int:pk>/', views.EditRequestView.as_view(),
+         name='edit_request'),
+    path('manage_requests/delete_request/<int:id>', views.delete_request,
+         name='delete_request'),
+    path('manage_requests/post_request/<int:id>', views.post_request,
+         name='post_request'),
 ]

@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 
 from catalog.models import Beer, Requests
 from users.models import Review
-from .forms import RequestsForm, ReviewForm, BeerForm
+from .forms import RequestsForm, RequestAdminForm, ReviewForm, BeerForm
 from .utils import get_random_beer_pk
 
 
@@ -84,6 +84,17 @@ class EditBeerView(SuccessMessageMixin, generic.UpdateView):
     template_name = "catalog/edit_beer.html"
     success_message = "The beer was edited successfully!"
     success_url = reverse_lazy("manage_beers")
+
+
+class EditRequestView(SuccessMessageMixin, generic.UpdateView):
+    """
+    View for editing an individual beer
+    """
+    model = Requests
+    form_class = RequestAdminForm
+    template_name = "catalog/edit_request.html"
+    success_message = "The request was edited successfully!"
+    success_url = reverse_lazy("manage_requests")
 
 
 def beer_detail(request, id):
@@ -245,3 +256,53 @@ def delete_beer(request, id):
                              'You do not have permission to delete!')
 
     return HttpResponseRedirect(reverse('manage_beers'))
+
+
+def post_request(request, id):
+    """
+    View to add requested beer to beer database
+    """
+    beer_request = Requests.objects.get(pk=id)
+    beer_form = BeerForm(data={
+        "name": beer_request.beer_name,
+        "tagline": f"""{beer_request.beer_name},
+        Made by {beer_request.brewery_name},
+        requested by {beer_request.user}""",
+        "first_brewed": beer_request.first_brewed,
+        "description": beer_request.comments,
+        "beer_image": beer_request.image,
+        "abv": beer_request.abv,
+        "food_pairing": ["No pairings yet!",],
+        "avg_rating": 0,
+    })
+
+    if beer_form.is_valid():
+        beer_form.save()
+        messages.add_message(
+            request, messages.SUCCESS,
+            'New beer has successfully been added to the database!'
+            )
+    else:
+        messages.add_message(request,
+                             messages.ERROR,
+                             f'Invalid beer input. {beer_form.errors}')
+        
+    return HttpResponseRedirect(reverse('manage_requests'))
+
+
+def delete_request(request, id):
+    """
+    View to delete requests
+    """
+    queryset = Requests.objects.all()
+    beer_request = get_object_or_404(queryset, id=id)
+
+    if request.user.is_staff:
+        beer_request.delete()
+        messages.add_message(request, messages.SUCCESS, 'Request deleted!')
+    else:
+        messages.add_message(request,
+                             messages.ERROR,
+                             'You do not have permission to delete!')
+
+    return HttpResponseRedirect(reverse('manage_requests'))

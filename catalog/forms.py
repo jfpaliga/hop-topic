@@ -45,6 +45,26 @@ class RequestsForm(forms.ModelForm):
         return data
 
 
+class RequestAdminForm(forms.ModelForm):
+    """
+    Form class for admins to modify a request
+    """
+    class Meta:
+        """
+        Specify the django model and order of the fields
+        """
+        model = Requests
+        fields = (
+            'beer_name',
+            'brewery_name',
+            'image',
+            'abv',
+            'first_brewed',
+            'comments',
+            'is_approved',
+            )
+
+
 class ReviewForm(forms.ModelForm):
     """
     Form class for users to leave a review on a beer
