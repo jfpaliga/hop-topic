@@ -240,6 +240,10 @@ def add_new_beer(request):
                 request, messages.SUCCESS,
                 'New beer has successfully been added to the database!'
             )
+        else:
+            messages.add_message(request,
+                                messages.ERROR,
+                                f'Invalid beer input. {beer_form.errors}')
 
     return render(
         request,
