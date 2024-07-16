@@ -32,6 +32,6 @@ urlpatterns = [
          name='manage_reviews'),
     path('manage_reviews/approve_review/<int:id>', views.approve_review,
          name='approve_review'),
-    path('manage_reviews/delete_review/<int:id>', views.delete_review,
-         name='delete_review'),
+    path('manage_reviews/delete_review/<int:id>', views.delete_review_admin,
+         name='delete_review_admin'),
 ]

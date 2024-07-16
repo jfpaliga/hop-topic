@@ -339,7 +339,7 @@ def approve_review(request, id):
     return HttpResponseRedirect(reverse('manage_reviews'))
 
 
-def delete_review(request, id):
+def delete_review_admin(request, id):
     """
     View to delete reviews as an admin
     """
