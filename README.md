@@ -192,10 +192,14 @@ The Request a Beer page allows a user to fill out a form with the information on
 
 - Allow login to the site using a social media account.
 - Further development of the user profile page, including a profile picture and about section.
-- Front end admin page for superusers.
 - A 'favourite' option to allow users to add beers to a favourite list.
 
 [Back to the top](#table-of-contents)
+
+## Bugs
+
+- When navigating multiple times to the 'Beer of the Day' page, occasionally a different beer is displayed.
+- As a superuser, when creating a new beer in the database through the 'Post' option on an approved request, any custom image is not saved and has to be manually re-added.
 
 ## Technologies Used
 
@@ -299,25 +303,107 @@ For example, if I wanted to only test the forms in the catalog app I could run
 
             python manage.py test catalog.tests.test_forms
 
-Tests run on the catalog app: 33/33 successful with no errors or warnings found.
+<details>
+<summary>Tests run on the catalog app: 33/33 successful with no errors or warnings found.</summary>
+
 ![Image of automated tests on catalog app](docs/images/test_catalog.png)
 
-Tests run on the users app: 6/6 successful with no errors found.
+</details>
+
+<details>
+<summary>Tests run on the users app: 6/6 successful with no errors found.</summary>
+
 ![Image of automated tests on users app](docs/images/test_users.png)
+
+</details>
+
+<br>
 
 Coverage was tested to ensure automated tests were effective in testing all of the code.
 
 It was found that most modules had >= 95% coverage with the only exception being manage.py which is a Django managed module and not included in any of the written tests.
 
+<details>
+<summary>Coverage results</summary>
+
 ![Image of coverage of automated testing](docs/images/test_coverage.png)
+
+</details>
+
+<br>
+
+---
 
 ### Manual Testing
 
-Manual tests were carried out throughout development, using the user stories as a benchmark to ensure functionality was as intended.
+<details>
+<summary>General Testing</summary>
 
-Deployment was carried out at a very early stage to ensure consistency between the development and live environments.
+| Test                      | Action                                                      | Result                                                                                       |
+|---------------------------|-------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| Loading Homepage          | Navigate to home page URL                                   | Page loads with no errors                                                                    |
+| Navigation bar links      | Click links in page navbar                                  | Each link loads the correct page                                                             |
+| Admin links               | If logged in as an Admin, additional links are visible      | Links are visible when signed in as Admin, otherwise not visible                             |
+| Manual navigation         | Type urls into navigation bar                               | Navigation is successful, permission denied if attempting to access admin pages as non-admin |
+| Login/logout              | User login link and enter details to sign in                | If user authentication is successful, user can sign in                                       |
+| Form validation           | User fills out any of the website forms                     | Form will only be submitted if valid                                                         |
+| Delete buttons JavaScript | Clicking delete buttons brings up confirmation modal        | Confirmation modal is displayed and delete button re-directs to correct URL                  |
+| Edit review JavaScript    | Clicking edit on a review updates the form with user review | Form is filled and 'Submit' button text changed to read 'Update'                             |
 
-Additionally, user testing was carried out at several stages to ensure the site was intuitive and functional.
+</details>
+
+<details>
+<summary>User Story Testing: Site User</summary>
+
+| Test                            | Action                               | Result                                                                                                    |
+|---------------------------------|--------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| Paginated list of beers         | Navigate to home page                | Paginated list of beers is visible, 8 to a page                                                           |
+| Paginated list ranked by rating | Change the rating of a beer          | Order of beers displayed changes in response to rating changes                                            |
+| View beer of the day            | Click beer of the day link           | Link takes user to a page for a random beer, navigating back and forth sometimes gives a different result |
+| View more details on beer       | Click on a beer on any page          | Navigates user to a page displaying more detail on the selected beer                                      |
+| View reviews of a beer          | Navigate to a beer's page            | Approved user reviews are visible under the reviews section                                               |
+| Search the database             | Enter name/keyword into search bar   | Displays a list of beers that match the search criteria                                                   |
+| Filter the database             | Select a filter from the home page   | Displays a filtered list of beers. Can only display one filter/search currently                           |
+| View a user's reviews           | Click a username on a review         | Displays a user profile with all of the reviews that user has made                                        |
+| Search for a user               | On all reviews page use search bar   | Displays a user profile with all of the reviews that user has made                                        |
+| Register an account             | When logged out, click Register link | Displays a registration form, which when filled will register an account for the user                     |
+
+</details>
+
+<details>
+<summary>User Story Testing: Registered User</summary>
+
+| Test                       | Action                                      | Result                                                                                            |
+|----------------------------|---------------------------------------------|---------------------------------------------------------------------------------------------------|
+| Leave a review             | On a beer's page fill in review form        | Review is successfully submitted and awaits admin approval                                        |
+| Edit a review              | On a user's review, click the edit button   | Review form is changed to reflect an update, submission is successful and requires admin approval |
+| Delete a review            | On a user's review, click the delete button | Review is deleted from that beer after confirmation through modal                                 |
+| Request a beer to be added | Navigate to request page and fill form      | Request is successfully submitted                                                                 |
+
+</details>
+
+<details>
+<summary>User Story Testing: Superuser</summary>
+
+| Test                   | Action                                      | Result                                                                                                      |
+|------------------------|---------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| Create a beer entry    | Click add beer button on manage beers page  | Form is displayed and successful submission creates a new entry. Food pairing field must be in JSON format  |
+| Read beer database     | Navigate to manage beers page               | A paginated list of all entries into beer database is visible                                               |
+| Update beer entries    | Click edit button on manage beers page      | Form is displayed to make changes, which are then saved and the database is updated                         |
+| Delete beer entries    | Click delete button on manage beers page    | Beer is removed from the database after confirmation through modal                                          |
+| Read review database   | Navigate to manage reviews page             | List of all reviews is visible                                                                              |
+| Approve reviews        | Click approve button on manage reviews page | Review is approved and visible to all users, rating is updated                                              |
+| Delete reviews         | Click delete button on manage reviews page  | Review is deleted after confirmation through modal                                                          |
+| Read requests database | Navigate to manage requests page            | List of all requests is visible                                                                             |
+| Edit requests          | Click edit button on manage requests page   | Form is displayed to make changes, which are then saved and the database is updated                         |
+| Delete requests        | Click delete button on manage requests page | Request is deleted after confirmation through modal                                                         |
+| Approve requests       | Check is approved box on requests edit form | Request is approved and post button appears on manage requests page which can create beer entry in database |
+
+</details>
+
+<br>
+
+---
 
 ### Validator Testing
 
@@ -351,6 +437,7 @@ All code passed with no errors.
 
 <details>
 <summary>PEP8 testing for the catalog app</summary>
+
 ![Image for catalog.admin PEP8](docs/images/pep8_catalog_admin.png)
 ![Image for catalog.apps PEP8](docs/images/pep8_catalog_apps.png)
 ![Image for catalog.forms PEP8](docs/images/pep8_catalog_forms.png)
@@ -359,20 +446,25 @@ All code passed with no errors.
 ![Image for catalog.urls PEP8](docs/images/pep8_catalog_urls.png)
 ![Image for catalog.utils PEP8](docs/images/pep8_catalog_utils.png)
 ![Image for catalog.views PEP8](docs/images/pep8_catalog_views.png)
+
 </details>
 
 <details>
 <summary>PEP8 testing for the users app</summary>
+
 ![Image for users.admin PEP8](docs/images/pep8_users_admin.png)
 ![Image for users.apps PEP8](docs/images/pep8_users_apps.png)
 ![Image for users.models PEP8](docs/images/pep8_users_models.png)
 ![Image for users.urls PEP8](docs/images/pep8_users_urls.png)
 ![Image for users.views PEP8](docs/images/pep8_users_views.png)
+
 </details>
 
 <details>
 <summary>PEP8 testing for the apicall module</summary>
+
 ![Image for apicall PEP8](docs/images/pep8_apicall.png)
+
 </details>
 
 ### Performance and Accessibility Testing
