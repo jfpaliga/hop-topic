@@ -21,7 +21,7 @@ class TestAllReviewsPage(TestCase):
             tagline='Test beer',
             first_brewed='testdate',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=5,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=0
@@ -88,7 +88,7 @@ class TestUserReviewsPage(TestCase):
             tagline='Test beer',
             first_brewed='testdate',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=5,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=0

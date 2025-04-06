@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RemoveField(
             model_name='beer',
-            name='image_url',
+            name='beer_image',
         ),
         migrations.AddField(
             model_name='beer',

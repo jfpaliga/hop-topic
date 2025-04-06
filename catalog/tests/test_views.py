@@ -18,7 +18,7 @@ class TestHomePage(TestCase):
             tagline='A Real Bitter Experience',
             first_brewed='09/2007',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=5,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=0
@@ -69,7 +69,7 @@ class TestBeerFilterView(TestCase):
             tagline='Test beer one',
             first_brewed='testdate',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=5,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=1
@@ -81,7 +81,7 @@ class TestBeerFilterView(TestCase):
             tagline='Test beer two',
             first_brewed='testdate',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=11,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=2
@@ -93,7 +93,7 @@ class TestBeerFilterView(TestCase):
             tagline='Test beer three',
             first_brewed='testdate',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=3,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=4
@@ -182,7 +182,7 @@ class TestBeerDetailView(TestCase):
             tagline='Test beer',
             first_brewed='testdate',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=5,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=0
@@ -291,7 +291,7 @@ class TestBeerOfTheDayView(TestCase):
             tagline='Test beer one',
             first_brewed='testdate',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=5,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=1

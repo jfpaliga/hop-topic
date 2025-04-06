@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('tagline', models.CharField(max_length=200, unique=True)),
                 ('first_brewed', models.CharField(max_length=100)),
                 ('description', models.TextField()),
-                ('image_url', models.URLField()),
+                ('beer_image', models.URLField()),
                 ('abv', models.FloatField()),
                 ('food_pairing', models.JSONField()),
                 ('avg_rating', models.DecimalField(decimal_places=1, default=0, max_digits=2)),

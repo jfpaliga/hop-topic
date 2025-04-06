@@ -22,7 +22,7 @@ class TestGetBeerAvgRating(TestCase):
             tagline='Test beer',
             first_brewed='testdate',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=5,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=0
@@ -91,7 +91,7 @@ class TestGetRandomBeer(TestCase):
             tagline='Test beer one',
             first_brewed='testdate',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=5,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=1
@@ -103,7 +103,7 @@ class TestGetRandomBeer(TestCase):
             tagline='Test beer two',
             first_brewed='testdate',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=11,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=2
@@ -115,7 +115,7 @@ class TestGetRandomBeer(TestCase):
             tagline='Test beer three',
             first_brewed='testdate',
             description='Test description',
-            image_url='https://test.com',
+            beer_image='https://test.com',
             abv=3,
             food_pairing=['testone', 'testtwo', 'testthree'],
             avg_rating=3
